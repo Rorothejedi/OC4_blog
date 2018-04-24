@@ -4,8 +4,7 @@ Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
 Date d'achèvement : ../05/2018
 
-Dernière mise à jour : 18/04/2018 -->
-
+Dernière mise à jour : 23/04/2018 -->
 
 <!DOCTYPE html>
 
@@ -51,8 +50,12 @@ Dernière mise à jour : 18/04/2018 -->
 
 	    <title><?= $title ?></title>
 
-		<!-- reCAPTCHA -->
-	   <!--  <script src='https://www.google.com/recaptcha/api.js'></script> -->
+	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	    	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js%22%3E</script>
+	    	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js%22%3E</script>
+	    <![endif]-->
 
 	</head>
 
@@ -79,7 +82,43 @@ Dernière mise à jour : 18/04/2018 -->
 				  	</ul>
 
 				  	<ul class="navbar-nav ml-auto">
-					    <li class="nav-item">
+				  		
+			  			<?php 
+
+			  				if (!empty($_SESSION['userName'])) 
+			  				{
+
+			  			?>
+			  				<span class='navbar-text'>
+								Vous êtes connecté, <strong><?= $_SESSION['userName'] ?></strong> | 
+			  				</span>
+			  				<li class="nav-item">
+					      		<a class="nav-link" href="index.php?p=logout">
+					      			Déconnexion <i class="fas fa-sign-out-alt"></i>
+					      		</a>
+					   		</li>
+
+			  			<?php
+
+			  				} 
+			  				elseif (!empty($_SESSION['access']) && $_SESSION['access'] == 1)
+			  				{
+			  					
+			  			?>
+
+						<li class="nav-item">
+					      	<a class="nav-link" href="index.php?p=manageComment">Accéder à l'administration</a>
+					    </li>
+
+			  			<?php
+
+			  				}
+			  				else
+			  				{
+
+			  			?>
+						
+						<li class="nav-item">
 					      	<a class="nav-link" href="index.php?p=register">S'inscrire</a>
 					    </li>
 					    <li class="nav-item">
@@ -87,6 +126,13 @@ Dernière mise à jour : 18/04/2018 -->
 					      		Se connecter <i class="fas fa-sign-in-alt"></i>
 					      	</a>
 					    </li>
+
+			  			<?php
+
+			  				}
+
+			  			?>
+				  		
 					</ul>
 				</div>
 			</nav>
@@ -121,7 +167,6 @@ Dernière mise à jour : 18/04/2018 -->
 				modal.find('#recipient_comment').val(recipient_comment);
 			});
 		</script>
-
 
 		<!-- Fonction de redimmentionnement de l'image de fond -->
 		<script src="./public/js/resizing.js"></script>

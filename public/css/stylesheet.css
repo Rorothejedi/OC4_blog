@@ -309,10 +309,20 @@ img.img_alaska {
 
 /*----------------------------REGISTRATION PAGE--------------------------------*/
 
-.container {
+.registration_page, .connection_page {
+	min-height: 100vh;
+	background-image: url("../img/alaska_mountains.jpg");
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
-.container {
-	margin: auto;
-	background-color: rgba(250,250,250);
+
+.row_contents {
+	background-color: white;
 	border-radius: 4px;
 }
+
+
+/*----------------------------CONNECTION PAGE--------------------------------*/
+
+

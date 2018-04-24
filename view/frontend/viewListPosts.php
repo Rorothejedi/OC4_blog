@@ -40,6 +40,7 @@
 						<?php 
 
 							}
+							$posts->closeCursor();
 
 						?>
 

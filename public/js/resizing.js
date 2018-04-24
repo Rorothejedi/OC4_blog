@@ -2,7 +2,10 @@ function resizing(img){
  
     var $image = img;
     var image_width = $image.width(); 
-    var image_height = $image.height();     
+    var image_height = $image.height();  
+
+    //test
+    console.log(img);
      
     var over = image_width / image_height; 
     var under = image_height / image_width; 
@@ -35,7 +38,6 @@ $(document).ready(function(){
     $imageA = $('img.img_aurora');
     $imageB = $('img.img_alaska');
 
-    // Au chargement initial   
     resizing($imageA);
     resizing($imageB);
      

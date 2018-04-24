@@ -1,45 +1,55 @@
 <?php $title = 'Blog Jean Fortroche | Inscription utilisateur'; ?>
 
+<?php $body_class = 'registration_page' ?>
+
 <?php ob_start(); ?>
 
 		<div class="container">
 
-			<!-- <div class="row row_contents">
-				<a href="index.php?p=home">
-					<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
-				</a>
-			</div> -->
+			<div class="row">
+				<div>
+					<a href="index.php?p=home" class="btn btn-dark">
+						<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
+					</a>
+				</div>
+			</div>
+			
 
 			<div class="row justify-content-center row_contents">
-				
+
 				<div class="col-lg-8">
-					
+	
 					<br>
 					<h1 class="text-center">Inscription</h1>
 					<br>
 
-					<form action="" method="POST">
+					<form action="index.php?p=registration" method="POST">
 
 						<div class="form-group">
-							<p class="lead">Veuillez saisir un nom d'utilisateur entre 2 et 25 caractères</p>
+							
 							<label for="pseudo">Nom d'utilisateur :</label>
-							<input type="text" class="form-control" id="pseudo" name="email">
+							<input type="text" class="form-control" id="pseudo" name="pseudo" required>
+							<small class="form-text text-muted">Veuillez saisir un nom d'utilisateur entre 2 et 25 caractères</small>
+
 						</div>
 
 						<div class="form-group">
-							<p class="lead">Saisissez une adresse e-mail valide</p>
+
 							<label for="email">Email :</label>
-							<input type="text" class="form-control" id="email" name="email">
+							<input type="text" class="form-control" id="email" name="email" required>
+							<small class="form-text text-muted">Veuillez saisir une adresse e-mail valide</small>
+
 						</div>
 
 						<div class="form-group">
-							<p class="lead">Veuillez saisir et confirmer le mot de passe que vous avez choisi</p>
 
 							<label for="password">Mot de passe :</label>
-							<input type="password" class="form-control" id="password" name="pass">
+							<input type="password" class="form-control" id="password" name="pass" required>
 
 							<label for="password">Confirmer le mot de passe :</label>
-							<input type="password" class="form-control" id="password" name="confirmPass">
+							<input type="password" class="form-control" id="password" name="confirmPass" required>
+							<small class="form-text text-muted">Veuillez saisir et confirmer le mot de passe que vous avez choisi, celui-ci doit contenir 12 caractères minimum et être composé de chiffres et de lettres</small>
+
 						</div>
 
 						<br>

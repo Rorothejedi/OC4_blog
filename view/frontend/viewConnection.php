@@ -1,16 +1,20 @@
 <?php $title = 'Blog Jean Fortroche | Connexion utilisateur'; ?>
 
+<?php $body_class = 'connection_page' ?>
+
 <?php ob_start(); ?>
 
 		<div class="container">
 
-			<div class="row justify-content-start">
-				<a href="index.php?p=home">
-					<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
-				</a>
+			<div class="row">
+				<div>
+					<a href="index.php?p=home" class="btn btn-dark">
+						<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
+					</a>
+				</div>
 			</div>
 
-			<div class="row justify-content-center">
+			<div class="row justify-content-center row_contents">
 				
 				<div class="col-lg-8">
 
@@ -20,21 +24,21 @@
 
 					<br>
 
-					<form action="" method="POST">
+					<form action="index.php?p=connection" method="POST">
 
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Nom d'utilisateur ou email" name="email">
+							<input type="text" class="form-control" placeholder="Nom d'utilisateur" name="pseudo" required>
 						</div>
 
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Mot de passe" name="pass">
+							<input type="password" class="form-control" placeholder="Mot de passe" name="pass" required>
 							<p class="small"><a href="index.php?p=forgotPass">Mot de passe oublié ?</a></p>
 						</div>
 
-						<div class="form-check">
+						<!-- <div class="form-check">
 						    <input type="checkbox" class="form-check-input" id="check">
 						    <label class="form-check-label" for="check">Se souvenir de moi</label>
-						</div>
+						</div> -->
 
 						<br>
 						
