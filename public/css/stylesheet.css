@@ -27,6 +27,11 @@ body {
 	max-width: 50%;
 }
 
+.hidden {
+	display: none;
+}
+
+
 
 /*----------------------------FRONTEND--------------------------------*/
 
@@ -284,6 +289,16 @@ img.img_alaska {
 }
 
 /*------Comments------*/
+
+.btn-comment {
+	margin-bottom: 30px;
+}
+.div_post_comment {
+	background-color: rgb(200,200,200) !important;
+	margin: 0 -15px;
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+}
 
 #comments {
 	background-color: rgb(245,245,245);

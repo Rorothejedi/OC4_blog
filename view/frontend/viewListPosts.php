@@ -20,8 +20,9 @@
 
 						<?php 
 
+							$nbrCommentsData = $nbrComments->fetchAll();
 							$data = $posts->fetchAll();
-						
+
 							foreach ($data as $key => $res) {
 
 						?>
@@ -33,9 +34,9 @@
 									<p class="paragraph"><?= $res['SUBSTR(content, 1, 200)'] ?></p>
 									<!-- <p><em>?? commentaires</em></p> -->
 									<button class="btn btn-dark">Lire le chapitre</button>
+									<p><em><?= $nbrCommentsData[$key]['COUNT(c.id)'] ?> commentaire(s)</em></p>
 								</div>
 							</a>
-
 
 						<?php 
 

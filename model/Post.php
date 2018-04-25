@@ -1,50 +1,72 @@
 <?php
 
-require_once("model/Database.php");
-
-class Post extends Database
+class Post
 {
-	public function getPosts()
+
+    //Liste des propriétés
+    private $_id;
+    private $_title;
+    private $_content;
+    private $_post_date;
+
+
+    // Constructeur
+    public function __construct($data)
     {
-        $db = $this->db_connect();
-
-        $req = $db->query("
-            SELECT id, title, SUBSTR(content, 1, 200), DATE_FORMAT(post_date, '%W, %d %M %Y') AS date_post 
-            FROM post 
-            ORDER BY post_date DESC 
-            LIMIT 0, 5");
-
-        return $req;
-    }
-
-    public function getPost($postId)
-    {
-        $db = $this->db_connect();
-
-        $req = $db->prepare("
-            SELECT id, title, content, DATE_FORMAT(post_date, '%W, %d %M %Y') AS creation_date_fr 
-            FROM post 
-            WHERE id = ?");
-        
-        $req->execute(array($postId));
-        $post = $req->fetch();
-        $req->closeCursor();
-
-        return $post;
+        $this->hydrate($data);
     }
 
 
-    // Méthode pour obtenir le nombre de commentaires pour chaque post
-    // public function getNbrComments($postId)
-    // {
-    //  	$db = $this->db_connect();
+    // Méthode d'hydratation
+    public function hydrate($data)
+    {
+        foreach ($data as $key => $value)
+        {
 
-    // 	$request = $db->prepare("SELECT COUNT(*) FROM comment WHERE id_post = ?");
-    // 	$request->execute(array($postId));
-    // 	$nbrComment = $req->fetch();
+        // On récupère le nom du setter correspondant à l'attribut
+        $method = 'set'.ucfirst($key);  
 
-    //  	return $nbrComment;
-    // }
+            // Si le setter correspondant existe
+            if (method_exists($this, $method))
+            {
+                // On appelle le setter
+                $this->$method($value);
+            }
+        }
+    }
 
 
+    //Liste des getters
+    public function id() { return $this->_id; }
+    public function title() { return $this->_title; }
+    public function content() { return $this->_content; }
+    public function post_date() { return $this->_post_date; }
+
+
+    //Liste des setters
+    public function setId($id)
+    {
+        $this->_id = (int) $id;
+    }
+
+    public function setTitle($title)
+    {
+        if (is_string($title)) {
+            $this->_title = $title;
+        }
+    }
+
+    public function setContent($content)
+    {
+        if (is_string($content)) {
+            $this->_content = $content;
+        }
+    }
+
+    public function setPost_date($post_date)
+    {
+        if ($post_date instanceof DateTime) {
+            $this->_post_date = $post_date;
+        }
+    }
 }

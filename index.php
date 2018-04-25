@@ -159,6 +159,35 @@ try
             }
 			break;
 
+		case 'newComment':
+			if (isset($_GET['id']) && $_GET['id'] > 0) 
+			{
+				if (isset($_SESSION['userName']) && !empty($_SESSION['userName']))
+				{
+					if (isset($_POST['comment']) && !empty($_POST['comment']))
+					{
+						$postId  = (int) $_GET['id'];
+						$content = nl2br(htmlspecialchars($_POST['comment']));
+						$pseudo  = $_SESSION['userName'];
+
+						newComment($postId, $pseudo, $content);
+					}
+					else
+					{
+						alertFailure('Un commentaire ne peut pas être posté s\'il ne contient rien', 'post&id=' . $_GET['id']);
+					}
+				}
+				else
+				{
+					alertFailure('Vous devez être connecté pour poster un commentaire', 'post&id=' . $_GET['id']);
+				}
+			}
+			else
+			{
+				throw new Exception('Aucun identifiant de billet envoyé');
+			}
+			break;
+
 		case 'reportComment':
 			if (isset($_POST['comment_id']) && $_POST['comment_id'] > 0)
 			{
@@ -174,7 +203,6 @@ try
 			home();
 			break;
 		}
-
 	}
 	else
 	{

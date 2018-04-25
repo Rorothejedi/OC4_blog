@@ -4,14 +4,16 @@ session_start();
 
 // Chargement des classes
 require_once('./model/Post.php');
+require_once('./model/PostManager.php');
 require_once('./model/Comment.php');
+require_once('./model/CommentManager.php');
 require_once('./model/User.php');
 require_once('./model/UserManager.php');
 
 
 // Chargement des fonctions de contrôle
-
-// Accueil
+// 
+// -----------------  Display Pages  ---------------------
 function home()
 {
 	require('./view/frontend/viewHome.php');
@@ -34,7 +36,22 @@ function displayConfirmRegistration()
 	require ('./view/frontend/viewConfirmRegistration.php');
 }
 
-// Enregistrement d'un nouvel utilisateur
+
+// -----------------  Alerts  ---------------------
+
+function alertSuccess($message)
+{
+	$_SESSION['alertSuccess'] = $message;
+}
+function alertFailure($message, $page)
+{
+	$_SESSION['alertFailure'] = $message;
+	header('Location: index.php?p=' . $page);
+}
+
+
+// -----------------  Users  ---------------------
+
 function registrationUser($pseudo, $pass, $email)
 {
 	$newUser = new User([
@@ -51,22 +68,6 @@ function registrationUser($pseudo, $pass, $email)
 	header('Location: index.php?p=confirmRegister');
 }
 
-
-// Alertes
-function alertSuccess($message)
-{
-	$_SESSION['alertSuccess'] = $message;
-}
-function alertFailure($message, $page)
-{
-	$_SESSION['alertFailure'] = $message;
-	header('Location: index.php?p=' . $page);
-}
-
-
-
-
-// Connexion
 function connection($pseudo)
 {
 	$userManager = new UserManager();
@@ -94,28 +95,27 @@ function connectUser($pseudo)
 	$_SESSION['userName'] = $pseudo;
 	header('Location: index.php');
 }
-
-// Déconnexion
 function logout()
 {
 	header('Location: index.php');
 	session_destroy();
 }
 
+// -----------------  Posts  ---------------------
 
 function listPosts()
 {
-	$listPostsManager = new Post();
-	$posts = $listPostsManager->getPosts();
-	// $nbrComments = $listPostsManager->getNbrComments();
+	$postManager = new PostManager();
+	$posts = $postManager->getPosts();
+	$nbrComments = $postManager->getNbrCommentsByPost();
 
 	require('./view/frontend/viewListPosts.php');
 }
 
 function displayPost()
 {
-	$postManager = new Post();
-	$commentManager = new Comment();
+	$postManager = new PostManager();
+	$commentManager = new CommentManager();
 
 	$post = $postManager->getPost($_GET['id']);
 	$comments = $commentManager->getComments($_GET['id']);
@@ -123,20 +123,30 @@ function displayPost()
 	require('./view/frontend/viewPost.php');
 }
 
+// -----------------  Comments  ---------------------
+
 function reportComment($commentId)
 {
-	$commentManager = new Comment();
+	$commentManager = new CommentManager();
+	$commentManager->reportComment($commentId);
 
-	$comment_designed = $commentManager->reportComment($commentId);
-
-	if ($comment_designed === false) 
-	{
-        throw new Exception('Impossible de signaler le commentaire !');
-    } 
-    else 
-    {
-    	header('Location: index.php?p=post&id=' . $_GET['id']);
-    }
+    header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
 }
 
+function newComment($postId, $pseudo, $content)
+{
+	$userManager = new UserManager();
+	$userId = $userManager->getUser($pseudo);
+
+	$newComment = new Comment([
+		'post_id' => $postId,
+		'user_id' => $userId->id(),
+		'content' => $content
+	]);
+
+	$commentManager = new CommentManager();
+	$commentManager->addComment($newComment);
+
+	header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
+}	
 

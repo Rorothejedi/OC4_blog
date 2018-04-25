@@ -51,19 +51,27 @@
 		  					//Poster commentaires
 		  			?>
 
-		  			<button type="button" class="btn btn-primary">Poster un commentaire</button>
+		  			<div class="container-post-comment">
+		  				
+			  			<div class="row">
+			  				<button type="button" class="btn btn-primary btn-comment">Poster un commentaire</button>
+			  			</div>
 
-		  			<form action="#" method="POST">
+			  			<div class="div_post_comment comment hidden">
 
-		  				<div class="form-group">
-		  					
-								<textarea class="form-control" name="" id=""></textarea>
+			  				<form action="index.php?p=newComment&amp;id=<?= $_GET['id'] ?>" method="POST">
+
+				  				<div class="form-group">
+									<textarea class="form-control textarea-comment" name="comment" placeholder="Merci de respecter les règles de courtoisie élémentaires ainsi que les autres utilisateurs. Tout message ne respectant pas ces règles, pourra être supprimé et son auteur sanctionné." rows="3" required></textarea>
+								</div>
 
 								<button class="btn btn-secondary">Poster</button>
 
-						</div>
+				  			</form>
+			  			
+			  			</div>
 
-		  			</form>
+			  		</div>
 
 		  			<?php
 

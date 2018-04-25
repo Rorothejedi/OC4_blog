@@ -16,8 +16,8 @@ class UserManager extends Database
 
 		$req->execute(array(
 			'pseudo' => $user->pseudo(),
-			'pass' => $user->pass(),
-			'email' => $user->email(),
+			'pass'   => $user->pass(),
+			'email'  => $user->email(),
 			'access' => 2));
 
 		$req->closeCursor();
@@ -35,18 +35,25 @@ class UserManager extends Database
 	{
 		$db = $this->db_connect();
 
-		$req = $db->query('SELECT id, pseudo, email, pass, access FROM user WHERE pseudo = "' . $pseudo . '"');
+		$req = $db->query('
+			SELECT id, pseudo, email, pass, access 
+			FROM user 
+			WHERE pseudo = "' . $pseudo . '"');
+		
 		$data = $req->fetch();
 		
 		return new User($data);
 	}
 
-	public function getListUser()
+	public function getUsers()
 	{
-		$db = $this->db_connect();
+		$db    = $this->db_connect();
 		$users = [];
 
-    	$req = $this->$db->query('SELECT id, pseudo, email, pass, access FROM user ORDER BY pseudo AND access');
+    	$req = $db->query('
+			SELECT id, pseudo, email, pass, access 
+			FROM user 
+			ORDER BY pseudo AND access');
 
 	    while ($data = $req->fetch())
 	    {
