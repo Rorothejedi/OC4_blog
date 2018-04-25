@@ -34,7 +34,37 @@
 
 	<body class=" <?= $body_class ?>">
 
-	    <?= $content ?>
+		<?php 
+
+			if (!empty($_SESSION['alertSuccess'])) 
+			{
+				echo '<div class="alert alertFrontend alert-success fade show" role="alert">' .
+
+					$_SESSION['alertSuccess'] . 
+
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>';
+
+				$_SESSION['alertSuccess'] = null;
+			} 
+			elseif (!empty($_SESSION['alertFailure']))
+			{
+				echo '<div class="alert alertFrontend alert-danger fade show" role="alert">' .
+
+					$_SESSION['alertFailure'] . 
+
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>';
+
+				$_SESSION['alertFailure'] = null;
+			}
+
+	  		echo $content 
+	  ?>
 
 
 		<!-- Appels aux CDN -->
@@ -50,6 +80,12 @@
 
 		<!-- Instanciation et initialisation des objects JavaScript -->
 		<script src="./public/js/global.js"></script>
+
+		<!-- Script pour les alertes bootstrap -->
+		<script src="./public/js/alert.js"></script>
+
+		<!-- Script qui check le contenu des inputs (connexion, inscription) -->
+		<script src="./public/js/inputChecking.js"></script>
 			
 	</body>
 

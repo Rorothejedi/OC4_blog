@@ -1,4 +1,4 @@
-<?php $title = 'Blog Jean Fortroche | Liste des billets'; ?>
+<?php $title = 'Blog Jean Fortroche | Liste des chapitres'; ?>
 
 <?php $class_header = 'top_post'; ?>
 
@@ -44,6 +44,46 @@
 
 				<h2>Commentaires</h2>
 
+					<?php 
+
+		  				if (!empty($_SESSION['userName'])) 
+		  				{
+		  					//Poster commentaires
+		  			?>
+
+		  			<button type="button" class="btn btn-primary">Poster un commentaire</button>
+
+		  			<form action="#" method="POST">
+
+		  				<div class="form-group">
+		  					
+								<textarea class="form-control" name="" id=""></textarea>
+
+								<button class="btn btn-secondary">Poster</button>
+
+						</div>
+
+		  			</form>
+
+		  			<?php
+
+		  				}
+		  				else
+		  				{
+
+			  		?>
+							
+						<p><em>
+							Vous devez être connecté pour poster un commentaire <br>
+							<a href="index.php?p=login">Connectez-vous</a> ou <a href="index.php?p=register">inscrivez-vous</a>
+						</em></p>
+
+		  			<?php
+		  					
+		  				}
+
+		  			?>
+
 				<?php 
 
 					$results = $comments->fetchAll();
@@ -63,9 +103,22 @@
 					</div>
 
 					<div class="col-10">
+
+						<?php 
+						if (!empty($_SESSION['userName'])) 
+		  				{
+
+		  				?>
+
 						<span data-toggle="tooltip" data-placement="left" title="Signaler ce commentaire">
 							<i class="fas fa-exclamation-circle report_logo" data-toggle="modal" data-target="#modalReport" data-whatever="<?= $result['content'] ?>" data-comment="<?= $result['id'] ?>"></i>
 						</span>
+
+						<?php 
+
+						}
+
+						?>
 						<small class="text-muted">
 							Rédigé par <strong><?= $result['pseudo'] ?></strong> le <?= $result['comment_date_fr'] ?>
 						</small>

@@ -6,52 +6,80 @@ session_start();
 require_once('./model/Post.php');
 require_once('./model/Comment.php');
 require_once('./model/User.php');
+require_once('./model/UserManager.php');
 
 
 // Chargement des fonctions de contrôle
+
+// Accueil
 function home()
 {
 	require('./view/frontend/viewHome.php');
 }
-
-// Inscription
-function displayRegistration()
-{
-	require ('./view/frontend/viewRegistration.php');
-}
-// Enregistrment d'un nouvel utilisateur
-function registrationUser($pseudo, $pass, $email)
-{
-	$userManager = new User();
-	$create_user = $userManager->registerUser($pseudo, $pass, $email);
-
-	if ($create_user === false) 
-	{
-        throw new Exception('Impossible de créer un nouvel utilisateur !');
-    } 
-    else 
-    {
-    	//Ajouter une confirmation de l'inscription
-    	header('Location: index.php?p=confirmationRegister');
-    }
-}
-// Check de l'existence d'un pseudo ou d'une adresse mail pour éviter les doublons
-function checkUserInfos($pseudo, $email)
-{
-	$userManager = new User();
-	$checkUserInfos = $userManager->checkUserInfos($pseudo, $email);
-}
-
-
 // Connexion
 function displayConnection()
 {
 	require('./view/frontend/viewConnection.php');
 }
+// Inscription
+function displayRegistration()
+{
+	require ('./view/frontend/viewRegistration.php');
+}
+
+function displayConfirmRegistration()
+{
+	$_SESSION['pseudo'] = null;
+	$_SESSION['email'] = null;
+	require ('./view/frontend/viewConfirmRegistration.php');
+}
+
+// Enregistrement d'un nouvel utilisateur
+function registrationUser($pseudo, $pass, $email)
+{
+	$newUser = new User([
+		'pseudo' => $pseudo, 
+		'pass' => $pass, 
+		'email' => $email
+	]);
+
+	$userManager = new UserManager();
+	$userManager->addUser($newUser);
+
+	$_SESSION['userName'] = $pseudo;
+	$_SESSION['newUserRegister'] = true;
+	header('Location: index.php?p=confirmRegister');
+}
+
+
+// Alertes
+function alertSuccess($message)
+{
+	$_SESSION['alertSuccess'] = $message;
+}
+function alertFailure($message, $page)
+{
+	$_SESSION['alertFailure'] = $message;
+	header('Location: index.php?p=' . $page);
+}
+
+
+
+
+// Connexion
 function connection($pseudo)
 {
-	$userManager = new User();
-	$connectData = $userManager->connectUser($pseudo);
+	$userManager = new UserManager();
+	$connectData = $userManager->getUser($pseudo);
+
+	if ($connectData === false) 
+	{
+        throw new Exception('Ce nom d\'utilisateur n\'existe pas');
+    } 
+    else 
+    {
+    	header('Location: index.php?p=login');
+    }
 	return $connectData;
 }
 function connectAdmin($pseudo)
@@ -70,8 +98,8 @@ function connectUser($pseudo)
 // Déconnexion
 function logout()
 {
-	session_destroy();
 	header('Location: index.php');
+	session_destroy();
 }
 
 

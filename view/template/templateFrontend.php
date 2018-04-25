@@ -4,7 +4,7 @@ Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
 Date d'achèvement : ../05/2018
 
-Dernière mise à jour : 23/04/2018 -->
+Dernière mise à jour : 24/04/2018 -->
 
 <!DOCTYPE html>
 
@@ -138,7 +138,37 @@ Dernière mise à jour : 23/04/2018 -->
 			</nav>
 
 
-	    <?= $content ?>
+	   <?php 
+
+			if (!empty($_SESSION['alertSuccess'])) 
+			{
+				echo '<div class="alert alert-success fade show" role="alert">' .
+
+					$_SESSION['alertSuccess'] . 
+
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>';
+
+				$_SESSION['alertSuccess'] = null;
+			} 
+			elseif (!empty($_SESSION['alertFailure']))
+			{
+				echo '<div class="alert alert-danger fade show" role="alert">' .
+
+					$_SESSION['alertFailure'] . 
+
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>';
+
+				$_SESSION['alertFailure'] = null;
+			}
+
+	  		echo $content;
+	  ?>
 
 
 		<a href="#top" class="top d-none d-md-block">
@@ -176,6 +206,9 @@ Dernière mise à jour : 23/04/2018 -->
 
 		<!-- Instanciation et initialisation des objects JavaScript -->
 		<script src="./public/js/global.js"></script>
+
+		<!-- Script pour les alertes bootstrap -->
+		<script src="./public/js/alert.js"></script>
 			
 	</body>
 

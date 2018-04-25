@@ -14,7 +14,6 @@
 				</div>
 			</div>
 			
-
 			<div class="row justify-content-center row_contents">
 
 				<div class="col-lg-8">
@@ -28,16 +27,16 @@
 						<div class="form-group">
 							
 							<label for="pseudo">Nom d'utilisateur :</label>
-							<input type="text" class="form-control" id="pseudo" name="pseudo" required>
-							<small class="form-text text-muted">Veuillez saisir un nom d'utilisateur entre 2 et 25 caractères</small>
+							<input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php if(!empty($_SESSION['pseudo'])){ echo $_SESSION['pseudo'];} ?>" required>
+							<small class="form-text text-muted small-pseudo">Veuillez saisir un nom d'utilisateur entre 2 et 25 caractères</small>
 
 						</div>
 
 						<div class="form-group">
 
 							<label for="email">Email :</label>
-							<input type="text" class="form-control" id="email" name="email" required>
-							<small class="form-text text-muted">Veuillez saisir une adresse e-mail valide</small>
+							<input type="text" class="form-control" id="email" name="email" value="<?php if(!empty($_SESSION['email'])){ echo $_SESSION['email'];} ?>" required>
+							<small class="form-text text-muted small-email">Veuillez saisir une adresse e-mail valide</small>
 
 						</div>
 
@@ -47,8 +46,8 @@
 							<input type="password" class="form-control" id="password" name="pass" required>
 
 							<label for="password">Confirmer le mot de passe :</label>
-							<input type="password" class="form-control" id="password" name="confirmPass" required>
-							<small class="form-text text-muted">Veuillez saisir et confirmer le mot de passe que vous avez choisi, celui-ci doit contenir 12 caractères minimum et être composé de chiffres et de lettres</small>
+							<input type="password" class="form-control" id="confirmPassword" name="confirmPass" required>
+							<small class="form-text text-muted small-pass">Veuillez saisir et confirmer le mot de passe que vous avez choisi, celui-ci doit contenir 12 caractères minimum et être composé de chiffres et de lettres</small>
 
 						</div>
 
@@ -69,6 +68,7 @@
 
 			</div>
 		</div>
+
 
 <?php $content = ob_get_clean(); ?>
 

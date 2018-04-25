@@ -30,50 +30,63 @@ try
 
 		    	if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
 		    	{
+		    		$_SESSION['pseudo'] = $pseudo;
 			    	if (filter_var($email, FILTER_VALIDATE_EMAIL))
 				    {
-				    	$countUserInfos = checkUserInfos($pseudo, $email);
+				    	$_SESSION['email'] = $email;
+				    	$resultPseudo = connection($pseudo);
 
-				    	if ($countUserInfos == 0)
+				    	if ($resultPseudo->pseudo() != $pseudo && $resultPseudo->email() != $email) 
 				    	{
-				    		if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) {
-
+				    		if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+				    		{
 				    			if ($pass == $confirmPass) 
 				    			{
 				    				$pass = password_hash($pass, PASSWORD_DEFAULT);
 				    				registrationUser($pseudo, $pass, $email);
-				    				echo 'Vous êtes bien inscrit !';
+				    				alertSuccess('Vous êtes bien inscrit !');
 				    			}
 				    			else
 				    			{
-				    				echo'Les mots de passes renseignés doivent être identiques';
+				    				alertFailure('Les mots de passes renseignés doivent être identiques', 'register');
 				    			}	
 				    		}
 				    		else
 				    		{
-				    			echo 'Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres';
+				    			alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'register');
 				    		}
 				    	}
 				    	else 
 				    	{
-				    		echo 'Ce nom d\'utilisateur ou cette adresse email est déjà utilisé';
+				    		alertFailure('Ce nom d\'utilisateur ou cette adresse email est déjà utilisé', 'register');
 				    	}
 				    }
 				    else 
 				    {
-				    	echo "Cette adresse email n'est pas valide";
+				    	alertFailure('Cette adresse email n\'est pas valide', 'register');
 				    }
 				}
 				else
 				{
-					echo 'Le nom d\'utilisateur doit faire entre 2 et 25 caractères';
+					alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'register');
 				}
 			}
 			else
 			{
 				throw new Exception('L\'utilisateur n\'a pas pû être créé');
 			}
-		   
+			break;
+
+		case 'confirmRegister':
+			if (!empty($_SESSION['newUserRegister']) && $_SESSION['newUserRegister'] === true) 
+			{
+				displayConfirmRegistration();
+				$_SESSION['newUserRegister'] = false;
+			} 
+			else
+			{
+				displayConnection();
+			}
 			break;
 
 		case 'login':
@@ -93,42 +106,42 @@ try
 
 				$resultPseudo = connection($pseudo);
 		
-				if ($resultPseudo == true)
+				if ($pseudo == $resultPseudo->pseudo())
 				{
-					if (password_verify($pass, $resultPseudo['pass']))
+					if (password_verify($pass, $resultPseudo->pass()))
 					{
-
 						$adminAccess = 1;
 						$userAccess  = 2;
 
-						if ($resultPseudo['access'] == $adminAccess) 
+						if ($resultPseudo->access() == $adminAccess) 
 						{
+							alertSuccess('Bienvenue ' . $pseudo . ' !');
 							connectAdmin($pseudo);
 						}
-						elseif ($resultPseudo['access'] == $userAccess) 
+						elseif ($resultPseudo->access() == $userAccess) 
 						{
+							alertSuccess('Bienvenue ' . $pseudo . ' !');
 							connectUser($pseudo);
 						}
 						else
 						{
-							echo "Vous ne disposez pas de droits d'accès correct";
+							alertFailure('Vous ne disposez pas de droits d\'accès correct', 'login');
 						}
 					}
 					else
 					{
-						echo "Le mot de passe est incorrect";
+						alertFailure('Le mot de passe est incorrect', 'login');
 					}
 				}
 				else
 				{
-					echo "Cet identifiant n'existe pas";
+					alertFailure('Cet identifiant n\'existe pas', 'login');
 				}
 			}
 			else
 			{
 				throw new Exception('Vous ne pouvez pas être connecté');
 			}
-
 			break;
 
 		case 'listPosts':
