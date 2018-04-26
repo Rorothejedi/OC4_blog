@@ -29,12 +29,32 @@
 
 							<a class="post_link" href="index.php?p=post&amp;id=<?= $res['id'] ?>" title="Lire le chapitre">
 								<div class="post">
-									<p class="date_format"><?= $res['date_post'] ?></p>
+									<p class="date_format">
+
+										<?php 
+
+											echo $res['date_post']. ' | '; 
+
+											$countComments = (int) $nbrCommentsData[$key]['COUNT(c.id)'];
+
+											if($countComments > 1)
+											{
+												echo '<small class="nbrComments">' . $countComments . ' commentaires</small>';
+											}
+											elseif($countComments == 1)
+											{
+												echo '<small class="nbrComments">' . $countComments . ' commentaire</small>';
+											}
+											else
+											{
+												echo '<small class="nbrComments">Pas de commentaire</small>';
+											}
+										?>
+									
+									</p>
 									<h3><?= $res['title'] ?></h3>
 									<p class="paragraph"><?= $res['SUBSTR(content, 1, 200)'] ?></p>
-									<!-- <p><em>?? commentaires</em></p> -->
 									<button class="btn btn-dark">Lire le chapitre</button>
-									<p><em><?= $nbrCommentsData[$key]['COUNT(c.id)'] ?> commentaire(s)</em></p>
 								</div>
 							</a>
 

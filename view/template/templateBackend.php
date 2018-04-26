@@ -1,11 +1,3 @@
-<!-- Projet 4 - Créez un blog pour un écrivain | OpenClassrooms
-
-Réalisé par Rodolphe Cabotiau
-Date de début de projet : 18/04/2018
-Date d'achèvement : ../05/2018
-
-Dernière mise à jour : 25/04/2018 -->
-
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -15,26 +7,6 @@ Dernière mise à jour : 25/04/2018 -->
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    
-	    <!-- Tags Open Graph -->
-		<meta property="og:title" content="Jean Forteroche | Billet simple pour l'Alaska">
-		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://rodolphe.cabotiau.com/projet_4_openclassrooms/">
-		<meta property="og:image" content="https://rodolphe.cabotiau.com/projet_4_openclassrooms/img/imgOpenGraph.jpg">
-		<meta property="og:description" content="Découvrez le nouveau roman de Jean Forteroche chaque semaine en exclusivité !"/>
-		<meta property="og:locale" content="fr_FR" />
-
-		<!-- Tags Twitter Card -->
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:site" content="@RCabotiau">
-		<meta name="twitter:title" content="Jean Forteroche | Billet simple pour l'Alaska">
-		<meta name="twitter:description" content="Découvrez le nouveau roman de Jean Forteroche chaque semaine en exclusivité !">
-		<meta name="twitter:creator" content="@RCabotiau">
-		<meta name="twitter:image" content="https://rodolphe.cabotiau.com/projet_4_openclassrooms/img/imgTwitterCard.jpg">
-
-		<!-- Tags Google -->
-		<meta name="description" content="Jean Forteroche | Billet simple pour l'Alaska">
-		<meta name="keywords" content="Jean Forteroche, roman alaska">
 
 		<!-- CSS Bootstrap -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -48,17 +20,6 @@ Dernière mise à jour : 25/04/2018 -->
 		<!-- Feuille de style CSS principales -->
 	    <link href="./public/css/stylesheet.css" rel="stylesheet">
 
-	   <!--  <script src="./public/vendor/tinymce/tinymce.min.js"></script>
-  		<script>
-  			tinymce.init({ 
-  				selector:'textarea',
-  				language: 'fr_FR',
-  				branding: false,
-  				elementpath: false,
-  				height : 150
-  			});
-  		</script> -->
-
 	    <title><?= $title ?></title>
 
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -68,9 +29,28 @@ Dernière mise à jour : 25/04/2018 -->
 	    	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js%22%3E</script>
 	    <![endif]-->
 
+	    <script src="./public/vendor/tinymce/tinymce.min.js"></script>
+  		<script>
+  			tinymce.init({ 
+  				selector:'textarea',
+  				language: 'fr_FR',
+  				branding: false,
+  				elementpath: false,
+  				height : 150
+  			});
+  		</script>
+
 	</head>
 
 	<body>
+
+		<?php
+
+			if ($_SESSION['access'] != 1) {
+				header('Location : index.php');
+			}
+
+		?>
 
 		<header id="top" class="<?= $class_header ?>">
 
@@ -85,38 +65,12 @@ Dernière mise à jour : 25/04/2018 -->
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				  	<ul class="navbar-nav">
 				  		 <li class="nav-item d-none d-md-block">
-					      	<a class="nav-link" href="index.php">Accueil</a>
+					      	<a class="nav-link" href="index.php">Revenir à l'accueil</a>
 					    </li>
-					    <li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=listPosts">Billet simple pour l'Alaska</a>
-					    </li>
-					    <?php 
-
-						    if (!empty($_SESSION['access']) && $_SESSION['access'] == 1)
-				  			{
-
-			  			?>
-			  			<li class="nav-item">
-						    <a class="nav-link" href="index.php?p=adminPosts">
-						    	<strong>Espace réservé</strong>
-						    </a>
-						</li>
-						<?php 
-
-							}
-
-						?>
 				  	</ul>
 
 				  	<ul class="navbar-nav ml-auto">
 				  		
-			  			<?php 
-
-			  				if (!empty($_SESSION['userName'])) 
-			  				{
-			  					
-			  			?>
-
 		  				<span class='navbar-text'>
 							Vous êtes connecté, <strong><?= $_SESSION['userName'] ?></strong> | 
 		  				</span>
@@ -126,35 +80,34 @@ Dernière mise à jour : 25/04/2018 -->
 				      		</a>
 				   		</li>
 
-			  			<?php
-
-			  				}
-			  				else
-			  				{
-
-			  			?>
-						
-						<li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=register">S'inscrire</a>
-					    </li>
-					    <li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=login">
-					      		Se connecter <i class="fas fa-sign-in-alt"></i>
-					      	</a>
-					    </li>
-
-			  			<?php
-
-			  				}
-
-			  			?>
-				  		
 					</ul>
 				</div>
 			</nav>
 
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-	   <?php 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbarAdmin">
+	    			<span class="navbar-toggler-icon"></span>
+	  			</button>
+
+	  			<a class="navbar-brand" href="index.php?p=adminPosts">Espace administrateur</a>
+
+				<div class="collapse navbar-collapse" id="collapsibleNavbarAdmin">
+				  	<ul class="navbar-nav">
+					    <li class="nav-item">
+					      	<a class="nav-link" href="index.php?p=adminPosts">Gestion des billets</a>
+					    </li>
+					     <li class="nav-item">
+					      	<a class="nav-link" href="index.php?p=adminComments">Gestion des commentaires</a>
+					    </li>
+					     <li class="nav-item">
+					      	<a class="nav-link" href="index.php?p=adminUsers">Gestion des utilisateurs</a>
+					    </li>
+				  	</ul>
+				</div>
+			</nav>
+
+	   	<?php 
 
 			if (!empty($_SESSION['alertSuccess'])) 
 			{
@@ -184,7 +137,7 @@ Dernière mise à jour : 25/04/2018 -->
 			}
 
 	  		echo $content;
-	  ?>
+	  	?>
 
 
 		<a href="#top" class="top d-none d-md-block">
@@ -199,23 +152,20 @@ Dernière mise à jour : 25/04/2018 -->
 		<!-- Fonctionnement des tooltips de bootstrap -->
 		<script>
 			// Fonctionnement du tooltip de bootstrap
-			$(document).ready(function(){
-				$('[data-toggle="tooltip"]').tooltip();
-			});
+			// $(document).ready(function(){
+			// 	$('[data-toggle="tooltip"]').tooltip();
+			// });
 
-			// Récupération des informations dans les champs du modal bootstrap
-			$('#modalReport').on('show.bs.modal', function (event) {
-				var button = $(event.relatedTarget);
-				var recipient = button.data('whatever');
-				var recipient_comment = button.data('comment');
-				var modal = $(this);
-				modal.find('#reported_comment').val(recipient);
-				modal.find('#recipient_comment').val(recipient_comment);
-			});
+			// // Récupération des informations dans les champs du modal bootstrap
+			// $('#modalReport').on('show.bs.modal', function (event) {
+			// 	var button = $(event.relatedTarget);
+			// 	var recipient = button.data('whatever');
+			// 	var recipient_comment = button.data('comment');
+			// 	var modal = $(this);
+			// 	modal.find('#reported_comment').val(recipient);
+			// 	modal.find('#recipient_comment').val(recipient_comment);
+			// });
 		</script>
-
-		<!-- Fonction de redimmentionnement de l'image de fond -->
-		<script src="./public/js/resizing.js"></script>
 
 		<!-- Fonction de défilement fluide entre les ancres -->
 		<script src="./public/js/scroll.js"></script>
@@ -225,9 +175,6 @@ Dernière mise à jour : 25/04/2018 -->
 
 		<!-- Script pour les alertes bootstrap -->
 		<script src="./public/js/alert.js"></script>
-
-		<!-- Script du bouton de poste des commentaires -->
-		<script src="./public/js/postComment.js"></script>
 			
 	</body>
 

@@ -24,11 +24,16 @@ class UserManager extends Database
 		
 	}
 
-	public function deleteUser(User $user)
+	public function deleteUser($userId)
 	{
 		$db = $this->db_connect();
 
-		$this->$db->exec('DELETE FROM user WHERE id = ' . $user->id());
+		$req = $db->prepare('
+			DELETE user, comment FROM user, comment 
+			WHERE user.id = ? AND comment.user_id = ?
+		');
+		$req->execute(array($userId, $userId));
+		$req->closeCursor();
 	}
 
 	public function getUser($pseudo)
@@ -47,18 +52,12 @@ class UserManager extends Database
 
 	public function getUsers()
 	{
-		$db    = $this->db_connect();
-		$users = [];
+		$db = $this->db_connect();
 
-    	$req = $db->query('
-			SELECT id, pseudo, email, pass, access 
+    	$users = $db->query('
+			SELECT id, pseudo, email, access 
 			FROM user 
-			ORDER BY pseudo AND access');
-
-	    while ($data = $req->fetch())
-	    {
-	      	$users[] = new User($data);
-	    }
+			ORDER BY access, pseudo');
 
     	return $users;
 	}

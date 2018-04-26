@@ -199,6 +199,72 @@ try
 			}
 			break;
 
+
+		case 'adminPosts':
+			adminPosts();
+			break;
+
+		case 'adminComments':
+			adminComments();
+			break;
+
+		case 'deleteComment':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			{
+				if (isset($_POST['commentId']) && !empty($_POST['commentId']))
+				{
+					if (isset($_POST['delete']) && $_POST['delete'] == 'delete') 
+					{
+						alertSuccess('Le commentaire a bien été supprimé');
+						deleteComment($_POST['commentId']);
+					}
+					else
+					{
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'adminComments');
+					}
+				}
+				else
+				{
+					alertFailure('Vous devez sélectionner un commentaire pour effectuer cette action', 'adminComments');
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas supprimer de commentaires');
+			}
+			break;
+
+		case 'adminUsers':
+			adminUsers();
+			break;
+
+		case 'deleteUser':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1)
+			{
+				if (isset($_POST['userId']) && !empty($_POST['userId']))
+				{
+					if (isset($_POST['delete']) && $_POST['delete'] == 'delete')
+					{
+						alertSuccess('L\'utilisateur a bien été supprimé');
+						deleteUser($_POST['userId']);
+					}
+					else
+					{
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'adminUsers');
+					}
+				}
+				else
+				{
+					alertFailure('Vous devez sélectionner un commentaire pour effectuer cette action', 'adminUsers');
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas supprimer de commentaires');
+			}
+			break;
+
+
 		default:
 			home();
 			break;

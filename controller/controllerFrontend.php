@@ -85,13 +85,13 @@ function connection($pseudo)
 }
 function connectAdmin($pseudo)
 {
-	$_SESSION['access']   = 1;
+	$_SESSION['access'] = 1;
 	$_SESSION['userName'] = $pseudo;
-	header('Location: index.php?p=manageComment');
+	header('Location: index.php?p=adminPosts');
 }
 function connectUser($pseudo)
 {
-	$_SESSION['access']   = 2;
+	$_SESSION['access'] = 2;
 	$_SESSION['userName'] = $pseudo;
 	header('Location: index.php');
 }
@@ -150,3 +150,80 @@ function newComment($postId, $pseudo, $content)
 	header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
 }	
 
+
+// ---------------------------  ADMIN  --------------------------------
+
+
+// ---------------  Posts  --------------------
+
+
+function adminPosts()
+{
+	$postManager = new PostManager();
+	$posts = $postManager->getPosts();
+
+	require('./view/backend/viewAdminPosts.php');
+}
+function showPost()
+{
+
+}
+function editPost()
+{
+
+}
+function deletePost()
+{
+
+}
+
+
+// ---------------  Comments  -------------------
+
+
+
+function adminComments()
+{
+	$commentManager = new CommentManager();
+	$comments = $commentManager->getCommentsByReport();
+
+	require('./view/backend/viewAdminComments.php');
+}
+function showComment()
+{
+
+}
+function editComment()
+{
+
+}
+function deleteComment($commentId)
+{
+	$commentManager = new CommentManager();
+	$commentManager->deleteComment($commentId);
+
+	header('Location: index.php?p=adminComments');
+}
+
+
+// ---------------  Users  -------------------
+
+
+function adminUsers()
+{
+	$userManager = new UserManager();
+	$users = $userManager->getUsers();
+
+	require('./view/backend/viewAdminUsers.php');
+}
+function editUser()
+{
+
+}
+function deleteUser($userId)
+{
+	$userManager = new UserManager();
+	$userManager->deleteUser($userId);
+
+	header('Location: index.php?p=adminUsers');
+}

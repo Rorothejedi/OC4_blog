@@ -32,7 +32,7 @@ class PostManager extends Database
         $db = $this->db_connect();
 
         $req = $db->query("
-            SELECT id, title, SUBSTR(content, 1, 200), DATE_FORMAT(post_date, '%W, %d %M %Y') AS date_post 
+            SELECT id, title, SUBSTR(content, 1, 200), DATE_FORMAT(post_date, '%W, %d %M %Y') AS date_post, DATE_FORMAT(post_date, '%d/%m/%Y') AS mini_date_post 
             FROM post 
             ORDER BY post_date DESC 
             LIMIT 0, 5");
@@ -68,10 +68,10 @@ class PostManager extends Database
 
     	$req = $db->query("
             SELECT COUNT(c.id) 
-            FROM comment c
-            RIGHT JOIN post p 
-            ON c.post_id = p.id
-            GROUP BY c.post_id
+            FROM post p
+            LEFT JOIN comment c
+            ON p.id = c.post_id
+            GROUP BY p.id
             ORDER BY p.post_date DESC 
         ");
 

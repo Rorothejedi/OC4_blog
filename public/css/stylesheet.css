@@ -249,6 +249,10 @@ img.img_alaska {
 .date_format {
 	text-transform: uppercase;
 }
+.nbrComments {
+	text-transform: initial !important;
+	font-style: italic;
+}
 
 /*----------------------------POST--------------------------------*/
 
@@ -319,8 +323,8 @@ img.img_alaska {
     background-color: #d9534f;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
+    -moz-border-radius-top-left: 5px;
+    -moz-border-radius-top-right: 5px;
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
 }
@@ -328,7 +332,6 @@ img.img_alaska {
 .btn-danger {
 	background-color: #d9534f !important;
 }
-
 
 /*----------------------------REGISTRATION PAGE--------------------------------*/
 
@@ -346,6 +349,27 @@ img.img_alaska {
 }
 
 
-/*----------------------------CONNECTION PAGE--------------------------------*/
+/*----------------------------ADMIN--------------------------------*/
 
+.admin_page {
+	background-color: rgb(250,250,250);
+	min-height: 100vh;
+	border-bottom-right-radius : 4%;
+	border-bottom-left-radius : 4%;
+}
+.adminBackground {
+	background-color: white;
+	padding: 15px;
+}
+.titleAdmin {
+	text-indent: 5%;
+	font-size: 2rem;
+	margin: 35px 0;
+	width: 100%;
+}
 
+@media all and (max-width: 440px) {
+	.titleAdmin {
+		font-size: 1.5rem;
+	}
+}
