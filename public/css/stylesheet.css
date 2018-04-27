@@ -21,7 +21,7 @@ body {
 }
 
 .alert {
-	position: absolute;
+	position: fixed;
 	top : 60px;
 	right: 15px;
 	max-width: 50%;
@@ -274,13 +274,12 @@ img.img_alaska {
 	margin: 50px 0;
 }
 .text_content {
-	text-indent: 7%;
 	text-align: justify;
 	font-size: 1.3rem;
 	line-height: 40px;
-	letter-spacing: 2.5px;
+	letter-spacing: 2px;
 }
-.text_content:first-letter {
+.text_content p:first-of-type:first-letter {
 	font-size: 250%;
 }
 .report_logo {
@@ -312,6 +311,13 @@ img.img_alaska {
 	padding: 25px 10px 25px 10px;
 	border-radius: 4px;
 	background-color: rgb(230,230,230);
+	transition: background-color 1.5s;
+}
+.own-comment {
+	background-color: #C3E6CB;
+}
+.show-comment {
+	background-color: #FFEEBA;
 }
 
 /*----Report modal----*/
@@ -329,8 +335,9 @@ img.img_alaska {
      border-top-right-radius: 5px;
 }
 
-.btn-danger {
+.btn-danger-modal {
 	background-color: #d9534f !important;
+	border-color: #d9534f !important;
 }
 
 /*----------------------------REGISTRATION PAGE--------------------------------*/
@@ -353,13 +360,11 @@ img.img_alaska {
 
 .admin_page {
 	background-color: rgb(250,250,250);
-	min-height: 100vh;
 	border-bottom-right-radius : 4%;
 	border-bottom-left-radius : 4%;
 }
 .adminBackground {
-	background-color: white;
-	padding: 15px;
+	padding-bottom: 30px;
 }
 .titleAdmin {
 	text-indent: 5%;

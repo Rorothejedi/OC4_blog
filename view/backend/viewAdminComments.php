@@ -52,7 +52,7 @@
 							    <td class="text-center align-middle"><?= $value['comment_date'] ?></td>
 							    <td class="align-middle" data-comment="">
 							    	
-							    	<a href="#" class="btn btn-outline-primary">
+							    	<a href="index.php?p=post&amp;id=<?= $value['postId'] ?>&amp;commentId=<?= $value['commentId'] ?>#<?= $value['commentId'] ?>" class="btn btn-outline-primary">
 							    		<i class="fas fa-eye"></i>
 							    	</a>
 							    	<a href="#" class="btn btn-outline-secondary">
@@ -66,6 +66,8 @@
 							    	</form>
 							    	
 							    </td>
+
+
 						    </tr>
 
 	  						<?php 

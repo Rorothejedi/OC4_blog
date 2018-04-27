@@ -164,16 +164,57 @@ function adminPosts()
 
 	require('./view/backend/viewAdminPosts.php');
 }
-function showPost()
-{
 
+function newPost()
+{
+	require('./view/backend/viewNewPost.php');
 }
+function processNewPost($title, $content)
+{
+	$newPost = new Post([
+		'title' => $title,
+		'content' => $content
+	]);
+
+	$postManager = new PostManager();
+	$postManager->addPost($newPost);
+	header('Location: index.php?p=adminPosts');
+}
+
 function editPost()
 {
+	$postManager = new PostManager();
 
+	$post = $postManager->getPost($_GET['id']);
+
+	require('./view/backend/viewEditPost.php');
 }
-function deletePost()
+function processEditPost($postId, $title, $content) 
 {
+	$newPost = new Post([
+		'id' => $postId,
+		'title' => $title,
+		'content' => $content
+	]);
+
+	$postManager = new PostManager();
+	$postManager->editPost($newPost);
+	header('Location: index.php?p=adminPosts');
+}
+
+function deletePost($postId)
+{
+	$postManager = new PostManager();
+	$deleteTransaction = $postManager->deletePost($postId);
+
+	if ($deleteTransaction === true) 
+	{
+		header('Location: index.php?p=adminPosts');
+	} 
+	else 
+	{
+		throw new Exception('Oups ! Un problème est survenu...');
+	}
 
 }
 
@@ -216,6 +257,10 @@ function adminUsers()
 
 	require('./view/backend/viewAdminUsers.php');
 }
+function newAdminUser()
+{
+
+}
 function editUser()
 {
 
@@ -223,7 +268,14 @@ function editUser()
 function deleteUser($userId)
 {
 	$userManager = new UserManager();
-	$userManager->deleteUser($userId);
+	$deleteTransaction = $userManager->deleteUser($userId);
 
-	header('Location: index.php?p=adminUsers');
+	if ($deleteTransaction === true)
+	{
+		header('Location: index.php?p=adminUsers');
+	}
+	else 
+	{
+		throw new Exception('Oups ! Un problème est survenu...');
+	}
 }

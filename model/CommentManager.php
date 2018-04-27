@@ -60,7 +60,7 @@ class CommentManager extends Database
     $db = $this->db_connect();
 
     $comments = $db->query("
-      SELECT c.id, u.pseudo, p.title, SUBSTR(c.content, 1, 200), DATE_FORMAT(c.comment_date, '%d/%m/%Y à %Hh%i') AS comment_date, report
+      SELECT c.id AS commentId, p.id AS postId, u.pseudo, p.title, SUBSTR(c.content, 1, 200), DATE_FORMAT(c.comment_date, '%d/%m/%Y à %Hh%i') AS comment_date, report
       FROM comment c
       INNER JOIN post p ON c.post_id = p.id
       INNER JOIN user u ON c.user_id = u.id

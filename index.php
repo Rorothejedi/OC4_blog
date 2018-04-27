@@ -192,6 +192,7 @@ try
 			if (isset($_POST['comment_id']) && $_POST['comment_id'] > 0)
 			{
 				reportComment($_POST['comment_id']);
+				alertSuccess('Votre signalement a été transmis à la modération');
 			}
 			else
 			{
@@ -200,9 +201,104 @@ try
 			break;
 
 
+		//-----------------  ADMIN  -------------------
+		
+		// _______POST_______
+
 		case 'adminPosts':
 			adminPosts();
 			break;
+
+		case 'newPost':
+			newPost();
+			break;
+
+		case 'processNewPost':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			{
+				if (isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['content']) && !empty($_POST['content']))
+				{
+					$title = htmlspecialchars($_POST['title']);
+					alertSuccess('Le billet a bien été publié');
+					processNewPost($title, $_POST['content']);
+				}
+				else
+				{
+					alertFailure('Vous ne pouvez pas effectuer cette action', 'newPost');
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas créer de nouveau billet');
+			}
+			break;
+
+		case 'editPost':
+			editPost();
+			break;
+
+		case 'processEditPost':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			{
+				if (isset($_GET['id']) && $_GET['id'] > 0)
+				{
+					if (isset($_POST['edit']) && $_POST['edit'] == 'edit') 
+					{
+						if (isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['content']) && !empty($_POST['content']))
+						{
+							$title = htmlspecialchars($_POST['title']);
+							alertSuccess('Le billet a été edité avec succès');
+							processEditPost($_GET['id'], $title, $_POST['content']);
+						}
+						else
+						{
+							alertFailure('Vous ne pouvez pas effectuer cette action', 'editPost&id=' . $_GET['id']);
+						}
+					}
+					else
+					{
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'editPost&id=' . $_GET['id']);
+					}
+				}
+				else
+				{
+					alertFailure('Aucun identifiant de billet envoyé', 'adminPosts');
+				}
+				
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas éditer de billet');
+			}
+			break;
+
+		case 'deletePost':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			{
+				if (isset($_POST['postId']) && !empty($_POST['postId']))
+				{
+					if (isset($_POST['delete']) && $_POST['delete'] == 'delete') 
+					{
+						alertSuccess('Le billet a bien été supprimé');
+						deletePost($_POST['postId']);
+					}
+					else
+					{
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'adminPosts');
+					}
+				}
+				else
+				{
+					alertFailure('Vous devez sélectionner un billet pour effectuer cette action', 'adminPosts');
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas supprimer de billet');
+			}
+			break;
+
+		// _______COMMENT_______
 
 		case 'adminComments':
 			adminComments();
@@ -233,6 +329,10 @@ try
 				throw new Exception('Vous ne pouvez pas supprimer de commentaires');
 			}
 			break;
+
+
+		// _______USER_______
+
 
 		case 'adminUsers':
 			adminUsers();

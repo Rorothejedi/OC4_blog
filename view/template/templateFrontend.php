@@ -4,7 +4,7 @@ Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
 Date d'achèvement : ../05/2018
 
-Dernière mise à jour : 25/04/2018 -->
+Dernière mise à jour : 27/04/2018 -->
 
 <!DOCTYPE html>
 
@@ -48,17 +48,6 @@ Dernière mise à jour : 25/04/2018 -->
 		<!-- Feuille de style CSS principales -->
 	    <link href="./public/css/stylesheet.css" rel="stylesheet">
 
-	   <!--  <script src="./public/vendor/tinymce/tinymce.min.js"></script>
-  		<script>
-  			tinymce.init({ 
-  				selector:'textarea',
-  				language: 'fr_FR',
-  				branding: false,
-  				elementpath: false,
-  				height : 150
-  			});
-  		</script> -->
-
 	    <title><?= $title ?></title>
 
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -90,22 +79,9 @@ Dernière mise à jour : 25/04/2018 -->
 					    <li class="nav-item">
 					      	<a class="nav-link" href="index.php?p=listPosts">Billet simple pour l'Alaska</a>
 					    </li>
-					    <?php 
-
-						    if (!empty($_SESSION['access']) && $_SESSION['access'] == 1)
-				  			{
-
-			  			?>
-			  			<li class="nav-item">
-						    <a class="nav-link" href="index.php?p=adminPosts">
-						    	<strong>Espace réservé</strong>
-						    </a>
-						</li>
-						<?php 
-
-							}
-
-						?>
+					    
+			  			
+						
 				  	</ul>
 
 				  	<ul class="navbar-nav ml-auto">
@@ -114,11 +90,29 @@ Dernière mise à jour : 25/04/2018 -->
 
 			  				if (!empty($_SESSION['userName'])) 
 			  				{
-			  					
+
 			  			?>
 
-		  				<span class='navbar-text'>
-							Vous êtes connecté, <strong><?= $_SESSION['userName'] ?></strong> | 
+			  			
+
+			  			<?php 
+
+				  			if (!empty($_SESSION['access']) && $_SESSION['access'] == 1)
+				  			{
+
+			  			?>
+
+						<li class="nav-item">
+						    <a class="nav-link" href="index.php?p=adminPosts">Accès admin | </a> 
+						</li>
+
+			  			<?php 
+
+							}
+
+						?>
+						<span class='navbar-text'>
+							<strong><?= $_SESSION['userName'] ?></strong> | 
 		  				</span>
 		  				<li class="nav-item">
 				      		<a class="nav-link" href="index.php?p=logout">

@@ -22,8 +22,8 @@
 
 				<hr>
 
-				<div class="row">
-					<p class="text_content"><?= $post['content'] ?></p>
+				<div class="row text_content">
+					<?= $post['content'] ?>
 				</div>
 
 				<hr>
@@ -104,7 +104,7 @@
 					foreach ($results as $key => $result) {
 
 				?>
-				<div class="row comment">
+				<div class="row comment <?php if($_SESSION['userName'] == $result['pseudo']){ echo 'own-comment';}?> <?php if($_GET['commentId'] == $result['id']){ echo 'show-comment';} ?>" id="<?= $result['id'] ?>">
 					
 					<div class="col-12">
 						<p><?= $result['content'] ?></p>
@@ -113,8 +113,9 @@
 					<div class="col-10">
 
 						<?php 
-						if (!empty($_SESSION['userName'])) 
-		  				{
+
+							if (!empty($_SESSION['userName']) && $_SESSION['userName'] != $result['pseudo']) 
+			  				{
 
 		  				?>
 
@@ -124,7 +125,7 @@
 
 						<?php 
 
-						}
+							}
 
 						?>
 						<small class="text-muted">
@@ -168,7 +169,7 @@
 						      </div>
 
 				      		<div class="modal-footer">
-				      	 		<button type="submit" class="btn btn-danger">Confirmer le signalement</button>
+				      	 		<button type="submit" class="btn btn-danger btn-danger-modal">Confirmer le signalement</button>
 				        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 				      		</div>
 

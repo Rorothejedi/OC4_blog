@@ -20,11 +20,33 @@ class PostManager extends Database
         $req->closeCursor();
     }
 
-    public function deletePost(Post $post)
+    public function deletePost($postId)
     {
         $db = $this->db_connect();
 
-        $this->$db->exec('DELETE FROM post WHERE id = ' . $post->id());
+        try 
+        {
+            $db->beginTransaction();
+
+            $req = $db->query('SELECT COUNT(*) FROM comment WHERE post_id = "' . $postId . '"');
+
+            if ($req->fetchColumn() > 0) 
+            {
+                $db->query('DELETE post, comment FROM post, comment WHERE post.id = "' . $postId . '"'); 
+            }
+            else
+            {
+                $db->query('DELETE FROM post WHERE id = "' . $postId . '"'); 
+            }
+
+            $db->commit();   
+
+            return true;
+        } 
+        catch (Exception $e) 
+        {
+            $db->rollback();
+        } 
     }
 
 	public function getPosts()
@@ -47,7 +69,8 @@ class PostManager extends Database
         $req = $db->prepare("
             SELECT id, title, content, DATE_FORMAT(post_date, '%W, %d %M %Y') AS creation_date_fr 
             FROM post 
-            WHERE id = ?");
+            WHERE id = ?
+        ");
         
         $req->execute(array($postId));
         $post = $req->fetch();
@@ -56,9 +79,23 @@ class PostManager extends Database
         return $post;
     }
 
-    public function updatePost(Post $post)
+    public function editPost(Post $post)
     {
+        $db = $this->db_connect();
 
+        $req = $db->prepare("
+           UPDATE post 
+           SET title = :title, content = :content 
+           WHERE id = :id
+        ");
+
+        $req->execute(array(
+            'id' => $post->id(),
+            'title' => $post->title(),
+            'content' => $post->content()
+        ));
+
+        $req->closeCursor();
     }
 
     // Méthode pour obtenir le nombre de commentaires pour chaque post
@@ -69,8 +106,7 @@ class PostManager extends Database
     	$req = $db->query("
             SELECT COUNT(c.id) 
             FROM post p
-            LEFT JOIN comment c
-            ON p.id = c.post_id
+            LEFT JOIN comment c ON p.id = c.post_id
             GROUP BY p.id
             ORDER BY p.post_date DESC 
         ");

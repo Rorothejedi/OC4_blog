@@ -25,16 +25,34 @@ class UserManager extends Database
 	}
 
 	public function deleteUser($userId)
-	{
-		$db = $this->db_connect();
+    {
+        $db = $this->db_connect();
 
-		$req = $db->prepare('
-			DELETE user, comment FROM user, comment 
-			WHERE user.id = ? AND comment.user_id = ?
-		');
-		$req->execute(array($userId, $userId));
-		$req->closeCursor();
-	}
+        try 
+        {
+            $db->beginTransaction();
+
+            $req = $db->query('SELECT COUNT(*) FROM comment WHERE user_id = "' . $userId . '"');
+
+            if ($req->fetchColumn() > 0)
+            {
+                $req = $db->prepare('DELETE user, comment FROM user, comment WHERE user.id = ?'); 
+            }
+            else
+            {
+                $req = $db->prepare('DELETE FROM user WHERE id = ?'); 
+            }
+
+            $req->execute(array($userId));
+            $db->commit();
+
+            return true;
+        } 
+        catch (Exception $e) 
+        {
+            $db->rollback();
+        } 
+    }
 
 	public function getUser($pseudo)
 	{

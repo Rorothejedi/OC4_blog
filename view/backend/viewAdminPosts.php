@@ -17,7 +17,7 @@
 					<table class="table table-hover">
 
 						<div class="card-header d-flex flex-row-reverse">
-							<a href="#" class="btn btn-primary">
+							<a href="index.php?p=newPost" class="btn btn-primary">
 								Nouveau billet <i class="fas fa-plus"></i>
 							</a>
 						</div>
@@ -37,24 +37,27 @@
 
 	  							$data = $posts->fetchAll();
 
-								foreach ($data as $key => $res) {
+								foreach ($data as $key => $value) {
 
 	  						?>
 
 			 				<tr>
-						      	<td class="text-center align-middle"><?= $res['title'] ?></td>
-							    <td><?= $res['SUBSTR(content, 1, 200)'] ?></td>
-							    <td class="text-center align-middle"><?= $res['mini_date_post'] ?></td>
-							    <td class="align-middle" data-billet="<?= $res['id'] ?>">
-							    	<a href="#" class="btn btn-outline-primary">
+						      	<td class="text-center align-middle"><?= $value['title'] ?></td>
+							    <td><?= $value['SUBSTR(content, 1, 200)'] ?></td>
+							    <td class="text-center align-middle"><?= $value['mini_date_post'] ?></td>
+							    <td class="align-middle">
+							    	<a href="index.php?p=post&amp;id=<?= $value['id'] ?>" class="btn btn-outline-primary">
 							    		<i class="fas fa-eye"></i>
 							    	</a>
-							    	<a href="#" class="btn btn-outline-secondary">
+							    	<a href="index.php?p=editPost&amp;id=<?= $value['id'] ?>" class="btn btn-outline-secondary">
 							    		<i class="fas fa-pencil-alt"></i>
 							    	</a>
-							    	<button class="btn btn-outline-danger">
-							    		<i class="fas fa-times"></i>
-							    	</button>
+							    	<form action="index.php?p=deletePost" method="POST" style="display: inline-block;">
+										<input type="hidden" name="postId" value="<?= $value['id'] ?>">
+							    		<button type="submit" name="delete" value="delete" class="btn btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce billet ?\nAttention, tous les commentaires affiliés seront supprimés');">
+							    			<i class="fas fa-times"></i>
+							    		</button>
+							    	</form>
 							    </td>
 						    </tr>
 

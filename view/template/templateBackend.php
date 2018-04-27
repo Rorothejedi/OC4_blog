@@ -34,9 +34,11 @@
   			tinymce.init({ 
   				selector:'textarea',
   				language: 'fr_FR',
+  				menubar: false,
   				branding: false,
   				elementpath: false,
-  				height : 150
+  				plugins: ["autoresize"],
+  				toolbar: 'undo redo | bold italic  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
   			});
   		</script>
 
@@ -72,7 +74,7 @@
 				  	<ul class="navbar-nav ml-auto">
 				  		
 		  				<span class='navbar-text'>
-							Vous êtes connecté, <strong><?= $_SESSION['userName'] ?></strong> | 
+							<strong><?= $_SESSION['userName'] ?></strong> | 
 		  				</span>
 		  				<li class="nav-item">
 				      		<a class="nav-link" href="index.php?p=logout">
