@@ -4,7 +4,7 @@ Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
 Date d'achèvement : ../05/2018
 
-Dernière mise à jour : 27/04/2018 -->
+Dernière mise à jour : 30/04/2018 -->
 
 <!DOCTYPE html>
 
@@ -59,126 +59,43 @@ Dernière mise à jour : 27/04/2018 -->
 
 	</head>
 
-	<body>
+	<body class="<?= $body_class ?>">
 
 		<header id="top" class="<?= $class_header ?>">
 
-			<nav class="navbar navbar-expand-sm bg-light navbar-light">
+	   		<?php 
 
-				<a class="navbar-brand" href="index.php">Jean Forteroche</a>
+	   			include('navbar.php');
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-	    			<span class="navbar-toggler-icon"></span>
-	  			</button>
+				if (!empty($_SESSION['alertSuccess'])) 
+				{
+					echo '<div class="alert alert-success fade show" role="alert">' .
 
-				<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				  	<ul class="navbar-nav">
-				  		 <li class="nav-item d-none d-md-block">
-					      	<a class="nav-link" href="index.php">Accueil</a>
-					    </li>
-					    <li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=listPosts">Billet simple pour l'Alaska</a>
-					    </li>
-					    
-			  			
-						
-				  	</ul>
+						$_SESSION['alertSuccess'] . 
 
-				  	<ul class="navbar-nav ml-auto">
-				  		
-			  			<?php 
+						'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>';
 
-			  				if (!empty($_SESSION['userName'])) 
-			  				{
+					$_SESSION['alertSuccess'] = null;
+				} 
+				elseif (!empty($_SESSION['alertFailure']))
+				{
+					echo '<div class="alert alert-danger fade show" role="alert">' .
 
-			  			?>
+						$_SESSION['alertFailure'] . 
 
-			  			
+						'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>';
 
-			  			<?php 
+					$_SESSION['alertFailure'] = null;
+				}
 
-				  			if (!empty($_SESSION['access']) && $_SESSION['access'] == 1)
-				  			{
-
-			  			?>
-
-						<li class="nav-item">
-						    <a class="nav-link" href="index.php?p=adminPosts">Accès admin | </a> 
-						</li>
-
-			  			<?php 
-
-							}
-
-						?>
-						<span class='navbar-text'>
-							<strong><?= $_SESSION['userName'] ?></strong> | 
-		  				</span>
-		  				<li class="nav-item">
-				      		<a class="nav-link" href="index.php?p=logout">
-				      			Déconnexion <i class="fas fa-sign-out-alt"></i>
-				      		</a>
-				   		</li>
-
-			  			<?php
-
-			  				}
-			  				else
-			  				{
-
-			  			?>
-						
-						<li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=register">S'inscrire</a>
-					    </li>
-					    <li class="nav-item">
-					      	<a class="nav-link" href="index.php?p=login">
-					      		Se connecter <i class="fas fa-sign-in-alt"></i>
-					      	</a>
-					    </li>
-
-			  			<?php
-
-			  				}
-
-			  			?>
-				  		
-					</ul>
-				</div>
-			</nav>
-
-
-	   <?php 
-
-			if (!empty($_SESSION['alertSuccess'])) 
-			{
-				echo '<div class="alert alert-success fade show" role="alert">' .
-
-					$_SESSION['alertSuccess'] . 
-
-					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>';
-
-				$_SESSION['alertSuccess'] = null;
-			} 
-			elseif (!empty($_SESSION['alertFailure']))
-			{
-				echo '<div class="alert alert-danger fade show" role="alert">' .
-
-					$_SESSION['alertFailure'] . 
-
-					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>';
-
-				$_SESSION['alertFailure'] = null;
-			}
-
-	  		echo $content;
-	  ?>
+		  		echo $content;
+	  		?>
 
 
 		<a href="#top" class="top d-none d-md-block">
@@ -239,6 +156,9 @@ Dernière mise à jour : 27/04/2018 -->
 
 		<!-- Script du bouton de poste des commentaires -->
 		<script src="./public/js/postComment.js"></script>
+
+		<!-- Script qui check le contenu des inputs (connexion, inscription) -->
+		<script src="./public/js/inputChecking.js"></script>
 			
 	</body>
 

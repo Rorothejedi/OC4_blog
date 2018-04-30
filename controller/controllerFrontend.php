@@ -55,20 +55,29 @@ function alertFailure($message, $page)
 // -----------------  Users  ---------------------
 
 
-function registrationUser($pseudo, $pass, $email)
+function registrationUser($pseudo, $pass, $email, $access)
 {
 	$newUser = new User([
 		'pseudo' => $pseudo, 
-		'pass' => $pass, 
-		'email' => $email
+		'pass'   => $pass, 
+		'email'  => $email,
+		'access' => $access
 	]);
 
 	$userManager = new UserManager();
 	$userManager->addUser($newUser);
 
-	$_SESSION['userName'] = $pseudo;
-	$_SESSION['newUserRegister'] = true;
-	header('Location: index.php?p=confirmRegister');
+	if ($access == 1) 
+	{
+		header('Location: index.php?p=adminUsers');
+	}
+	else
+	{
+		$_SESSION['userName'] = $pseudo;
+		$_SESSION['newUserRegister'] = true;
+		header('Location: index.php?p=confirmRegister');
+	}
+	
 }
 
 function connection($pseudo)
@@ -155,4 +164,30 @@ function newComment($postId, $pseudo, $content)
 	$commentManager->addComment($newComment);
 
 	header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
+}
+
+
+// ---------------  Settings  -------------------
+
+
+function userSettings($pseudo)
+{
+	$userManager = new UserManager();
+	$user = $userManager->getUser($pseudo);
+
+	require('./view/frontend/viewUserSettings.php');
+}
+function processEditUserSettings($id, $pseudo, $email, $pass)
+{
+	$newUser = new User([
+		'id'     => $id,
+		'pseudo' => $pseudo,
+		'pass'   => $pass,
+		'email'  => $email
+	]);
+
+	$userManager = new UserManager();
+	$userManager->editUser($newUser);
+	header('Location: index.php?p=userSettings');
+	$_SESSION['userName'] = $pseudo;
 }

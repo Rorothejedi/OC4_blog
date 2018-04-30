@@ -1,18 +1,12 @@
 <?php $title = 'Blog Jean Fortroche | Connexion utilisateur'; ?>
 
-<?php $body_class = 'connection_page' ?>
+<?php $body_class = 'body_connection_page'; ?>
+
+<?php $class_header = 'top_connection_page'; ?>
 
 <?php ob_start(); ?>
 
-		<div class="container">
-
-			<div class="row">
-				<div>
-					<a href="index.php?p=home" class="btn btn-dark">
-						<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
-					</a>
-				</div>
-			</div>
+		<div class="container connection_page">
 
 			<div class="row justify-content-center row_contents">
 				
@@ -32,7 +26,7 @@
 
 						<div class="form-group">
 							<input type="password" class="form-control" placeholder="Mot de passe" name="pass" required>
-							<p class="small"><a href="index.php?p=forgotPass">Mot de passe oublié ?</a></p>
+							<!-- <p class="small"><a href="index.php?p=forgotPass">Mot de passe oublié ?</a></p> -->
 						</div>
 
 						<!-- <div class="form-check">
@@ -66,4 +60,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('./view/template/template.php'); ?>
+<?php require('./view/template/templateFrontend.php'); ?>

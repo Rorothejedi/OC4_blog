@@ -1,18 +1,12 @@
 <?php $title = 'Blog Jean Fortroche | Inscription utilisateur'; ?>
 
-<?php $body_class = 'registration_page' ?>
+<?php $body_class = 'body_registration_page'; ?>
+
+<?php $class_header = 'top_registration_page'; ?>
 
 <?php ob_start(); ?>
 
-		<div class="container">
-
-			<div class="row">
-				<div>
-					<a href="index.php?p=home" class="btn btn-dark">
-						<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
-					</a>
-				</div>
-			</div>
+		<div class="container registration_page">
 			
 			<div class="row justify-content-center row_contents">
 
@@ -72,4 +66,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('./view/template/template.php'); ?>
+<?php require('./view/template/templateFrontend.php'); ?>

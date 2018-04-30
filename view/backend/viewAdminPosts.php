@@ -52,7 +52,7 @@
 							    	<a href="index.php?p=editPost&amp;id=<?= $value['id'] ?>" class="btn btn-outline-secondary">
 							    		<i class="fas fa-pencil-alt"></i>
 							    	</a>
-							    	<form action="index.php?p=deletePost" method="POST" style="display: inline-block;">
+							    	<form action="index.php?p=deletePost" method="POST" class="public_delete_form">
 										<input type="hidden" name="postId" value="<?= $value['id'] ?>">
 							    		<button type="submit" name="delete" value="delete" class="btn btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce billet ?\nAttention, tous les commentaires affiliés seront supprimés');">
 							    			<i class="fas fa-times"></i>

@@ -7,7 +7,6 @@ class UserManager extends Database
 	
 	public function addUser(User $user)
 	{
-
 		$db = $this->db_connect();
 
 		$req = $db->prepare("
@@ -18,10 +17,8 @@ class UserManager extends Database
 			'pseudo' => $user->pseudo(),
 			'pass'   => $user->pass(),
 			'email'  => $user->email(),
-			'access' => 2));
-
-		$req->closeCursor();
-		
+			'access' => $user->access()
+		));
 	}
 
 	public function deleteUser($userId)
@@ -80,9 +77,21 @@ class UserManager extends Database
     	return $users;
 	}
 
-	public function updateUser(User $user)
+	public function editUser(User $user)
 	{
+		$db = $this->db_connect();
 
+		$req = $db->prepare('
+			UPDATE user 
+			SET pseudo = :pseudo, email = :email, pass = :pass 
+			WHERE id = :id
+		');
+
+		$req->execute(array(
+			'id'     => $user->id(),
+			'pseudo' => $user->pseudo(),
+			'email'  => $user->email(),
+			'pass'   => $user->pass()
+		));
 	}
-
 }

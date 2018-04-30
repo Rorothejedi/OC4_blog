@@ -32,7 +32,7 @@ function newPost()
 function processNewPost($title, $content)
 {
 	$newPost = new Post([
-		'title' => $title,
+		'title'   => $title,
 		'content' => $content
 	]);
 
@@ -51,8 +51,8 @@ function editPost()
 function processEditPost($postId, $title, $content) 
 {
 	$newPost = new Post([
-		'id' => $postId,
-		'title' => $title,
+		'id'      => $postId,
+		'title'   => $title,
 		'content' => $content
 	]);
 
@@ -99,9 +99,9 @@ function editComment()
 function processEditComment($commentId, $content, $report)
 {
 	$newComment = new Comment([
-		'id' => $commentId,
+		'id'      => $commentId,
 		'content' => $content,
-		'report' => $report
+		'report'  => $report
 	]);
 
 	$commentManager = new CommentManager();
@@ -113,7 +113,15 @@ function deleteComment($commentId)
 	$commentManager = new CommentManager();
 	$commentManager->deleteComment($commentId);
 
-	header('Location: index.php?p=adminComments');
+	if ($_SESSION['access'] == 1) 
+	{
+		header('Location: index.php?p=adminComments');
+	} 
+	else 
+	{
+		header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
+
+	}
 }
 
 
@@ -129,11 +137,16 @@ function adminUsers()
 }
 function newAdminUser()
 {
-	
+	require('./view/backend/viewNewAdminUser.php');
 }
+
 function editUser()
 {
-
+	require('./view/backend/viewEditUser.php');
+}
+function processEditUser()
+{
+	
 }
 function deleteUser($userId)
 {

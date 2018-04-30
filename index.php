@@ -12,6 +12,7 @@ try
 		switch ($_GET['p']) 
 		{
 
+		//----------------------------------  FRONTEND  ------------------------------------
 		case 'home':
 			home();
 			break;
@@ -21,13 +22,15 @@ try
 			break;
 
 		case 'registration':
-			if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['pass']) && !empty($_POST['pass']) && isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+			if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+				&& isset($_POST['email']) && !empty($_POST['email']) 
+				&& isset($_POST['pass']) && !empty($_POST['pass']) 
+				&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
 			{
-
-				$pseudo = htmlspecialchars($_POST['pseudo']);
-		    	$email = htmlspecialchars($_POST['email']);
-		    	$pass = htmlspecialchars($_POST['pass']);
-		    	$confirmPass = htmlspecialchars($_POST['confirmPass']);
+				$pseudo      = htmlspecialchars($_POST['pseudo']);
+				$email       = htmlspecialchars($_POST['email']);
+				$pass        = htmlspecialchars($_POST['pass']);
+				$confirmPass = htmlspecialchars($_POST['confirmPass']);
 
 		    	if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
 		    	{
@@ -44,7 +47,7 @@ try
 				    			if ($pass == $confirmPass) 
 				    			{
 				    				$pass = password_hash($pass, PASSWORD_DEFAULT);
-				    				registrationUser($pseudo, $pass, $email);
+				    				registrationUser($pseudo, $pass, $email, 2);
 				    				alertSuccess('Vous êtes bien inscrit !');
 				    			}
 				    			else
@@ -99,7 +102,8 @@ try
 			break;
 
 		case 'connection':
-			if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['pass']) && !empty($_POST['pass'])) 
+			if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+				&& isset($_POST['pass']) && !empty($_POST['pass'])) 
 			{
 
 				$pseudo = htmlspecialchars($_POST['pseudo']);
@@ -202,10 +206,103 @@ try
 			break;
 
 
-		//-----------------  ADMIN  -------------------
+		// ------- Users Settings --------
+
+		case 'userSettings':
+			if (isset($_SESSION['userName']) && !empty($_SESSION['userName']))
+			{
+				userSettings($_SESSION['userName']);
+			}
+			break;
+
+		// Modification et/ou suppression d'un utilisateur depuis sa page de settings
+		case 'processEditUserSettings':
+			if (isset($_SESSION['userName']) && $_SESSION['userName'] && isset($_POST['idUser']) && !empty($_POST['idUser'])) 
+			{
+				if (isset($_POST['editUser']) && $_POST['editUser'] == 'editUser') 
+				{
+					if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+						&& isset($_POST['email']) && !empty($_POST['email'])) 
+					{
+						$pseudo = htmlspecialchars($_POST['pseudo']);
+						$email  = htmlspecialchars($_POST['email']);
+						$id = (int) $_POST['idUser'];
+
+						// Si on modifie le mot de passe
+						if (isset($_POST['pass']) && !empty($_POST['pass']) 
+							&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+						{
+							$pass        = htmlspecialchars($_POST['pass']);
+							$confirmPass = htmlspecialchars($_POST['confirmPass']);
+
+							if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+				    		{
+								if ($pass == $confirmPass)
+								{
+									$pass = password_hash($pass, PASSWORD_DEFAULT);
+								}
+								else
+								{
+									alertFailure('Les mots de passes renseignés doivent être identiques', 'userSettings');
+								}
+							}
+							else
+							{
+								alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'userSettings');
+							}
+						}
+						// Si les inputs pour modifier le mot de passe reste vierge
+						elseif(isset($_POST['oldPass']) && !empty($_POST['oldPass']))
+						{
+							$pass = htmlspecialchars($_POST['oldPass']);
+						}
+
+						if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
+		    			{
+		    				if (filter_var($email, FILTER_VALIDATE_EMAIL))
+				   			{
+								processEditUserSettings($id, $pseudo, $email, $pass);
+								alertSuccess('Vos informations ont bien été mises à jour !');
+				   			}
+				   			else
+				   			{
+				   				alertFailure('Cette adresse email n\'est pas valide', 'userSettings');
+				   			}
+		    			}
+		    			else
+		    			{
+		    				alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'userSettings');
+		    			}
+					}
+					else
+					{
+						alertFailure('Les champs "Nom d\'utilisateur" et "Email" doivent être correctement remplient', 'userSettings');
+					}
+				}
+				elseif (isset($_POST['deleteUser']) && $_POST['deleteUser'] == 'deleteUser') 
+				{
+					deleteUser($_POST['idUser']);
+					logout();
+				}
+				else
+				{
+					alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'userSettings');
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas modifier cet utilisateur');
+			}
+			break;
+
+		case 'deleteAccount':
+			deleteAccount();
+			break;
+
+
+		//----------------------------------  BACKEND  ------------------------------------
 		
 		// _______POST_______
-
 		case 'adminPosts':
 			adminPosts();
 			break;
@@ -217,7 +314,8 @@ try
 		case 'processNewPost':
 			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
 			{
-				if (isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['content']) && !empty($_POST['content']))
+				if (isset($_POST['title']) && !empty($_POST['title']) 
+					&& isset($_POST['content']) && !empty($_POST['content']))
 				{
 					$title = htmlspecialchars($_POST['title']);
 					alertSuccess('Le billet a bien été publié');
@@ -245,7 +343,8 @@ try
 				{
 					if (isset($_POST['edit']) && $_POST['edit'] == 'edit') 
 					{
-						if (isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['content']) && !empty($_POST['content']))
+						if (isset($_POST['title']) && !empty($_POST['title']) 
+							&& isset($_POST['content']) && !empty($_POST['content']))
 						{
 							$title = htmlspecialchars($_POST['title']);
 							alertSuccess('Le billet a été edité avec succès');
@@ -265,7 +364,6 @@ try
 				{
 					alertFailure('Aucun identifiant de billet envoyé', 'adminPosts');
 				}
-				
 			}
 			else
 			{
@@ -306,7 +404,8 @@ try
 			break;
 
 		case 'deleteComment':
-			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1 || 
+				isset($_SESSION['userName']) && $_SESSION['userName'] == $_POST['commentPseudo']) 
 			{
 				if (isset($_POST['commentId']) && !empty($_POST['commentId']))
 				{
@@ -356,7 +455,6 @@ try
 								$report = $_POST['valueReport'];
 							}
 					
-							
 							processEditComment($_GET['commentId'], $_POST['content'], $report);
 						}
 						else
@@ -373,7 +471,6 @@ try
 				{
 					alertFailure('Aucun identifiant de commentaire envoyé', 'adminComments');
 				}
-				
 			}
 			else
 			{
@@ -383,7 +480,6 @@ try
 
 
 		// _______USER_______
-
 
 		case 'adminUsers':
 			adminUsers();
@@ -415,6 +511,69 @@ try
 			}
 			break;
 
+		case 'newAdminUser':
+			newAdminUser();
+			break;
+
+		case 'processNewAdminUser':
+			if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+				&& isset($_POST['email']) && !empty($_POST['email']) 
+				&& isset($_POST['pass']) && !empty($_POST['pass']) 
+				&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+			{
+				$pseudo      = htmlspecialchars($_POST['pseudo']);
+				$email       = htmlspecialchars($_POST['email']);
+				$pass        = htmlspecialchars($_POST['pass']);
+				$confirmPass = htmlspecialchars($_POST['confirmPass']);
+
+		    	if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
+		    	{
+		    		$_SESSION['pseudo'] = $pseudo;
+			    	if (filter_var($email, FILTER_VALIDATE_EMAIL))
+				    {
+				    	$_SESSION['email'] = $email;
+				    	$resultPseudo = connection($pseudo);
+
+				    	if ($resultPseudo->pseudo() != $pseudo && $resultPseudo->email() != $email) 
+				    	{
+				    		if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+				    		{
+				    			if ($pass == $confirmPass) 
+				    			{
+				    				$pass = password_hash($pass, PASSWORD_DEFAULT);
+				    				registrationUser($pseudo, $pass, $email, 1);
+				    				alertSuccess('Le nouvel administrateur a été créé avec succès !');
+				    			}
+				    			else
+				    			{
+				    				alertFailure('Les mots de passes renseignés doivent être identiques', 'newAdminUser');
+				    			}	
+				    		}
+				    		else
+				    		{
+				    			alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'newAdminUser');
+				    		}
+				    	}
+				    	else 
+				    	{
+				    		alertFailure('Ce nom d\'utilisateur ou cette adresse email est déjà utilisé', 'newAdminUser');
+				    	}
+				    }
+				    else 
+				    {
+				    	alertFailure('Cette adresse email n\'est pas valide', 'newAdminUser');
+				    }
+				}
+				else
+				{
+					alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'newAdminUser');
+				}
+			}
+			else
+			{
+				throw new Exception('L\'administrateur n\'a pas pû être créé');
+			}
+			break;
 
 		default:
 			home();

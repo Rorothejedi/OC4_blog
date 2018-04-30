@@ -1,25 +1,20 @@
 <?php $title = 'Blog Jean Fortroche | Confirmation d\'inscription'; ?>
 
-<?php $body_class = 'registration_page' ?>
+<?php $body_class = 'body_registration_page' ?>
+
+<?php $class_header = 'top_registration_page'; ?>
 
 <?php ob_start(); ?>
 
-		<div class="container">
 
-			<div class="row">
-				<div>
-					<a href="index.php?p=home" class="btn btn-dark">
-						<i class="fas fa-arrow-alt-circle-left"></i> Revenir à l'accueil
-					</a>
-				</div>
-			</div>
+		<div class="container registration_page">
 			
 			<div class="row justify-content-center row_contents">
 
 				<div class="col-lg-8">
 	
 					<br>
-					<h1 class="text-center">Confirmation de l'inscription</h1>
+					<h1 class="text-center">Confirmation d'inscription</h1>
 					<br>
 					
 					<p>Bienvenue <strong><?= $_SESSION['userName'] ?></strong> ! </p>
@@ -41,4 +36,4 @@
 	$_SESSION['userName'] = null;
 ?>
 
-<?php require('./view/template/template.php'); ?>
+<?php require('./view/template/templateFrontend.php'); ?>

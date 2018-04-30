@@ -17,7 +17,7 @@
 					<table class="table table-hover">
 
 						<div class="card-header d-flex flex-row-reverse">
-							<a href="#" class="btn btn-primary">
+							<a href="index.php?p=newAdminUser" class="btn btn-primary">
 								Nouvel administrateur <i class="fas fa-plus"></i>
 							</a>
 						</div>

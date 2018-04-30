@@ -48,7 +48,8 @@
 
 		<?php
 
-			if ($_SESSION['access'] != 1) {
+			if ($_SESSION['access'] != 1) 
+			{ 
 				header('Location : index.php');
 			}
 
@@ -56,35 +57,7 @@
 
 		<header id="top" class="<?= $class_header ?>">
 
-			<nav class="navbar navbar-expand-sm bg-light navbar-light">
-
-				<a class="navbar-brand" href="index.php">Jean Forteroche</a>
-
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-	    			<span class="navbar-toggler-icon"></span>
-	  			</button>
-
-				<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				  	<ul class="navbar-nav">
-				  		 <li class="nav-item d-none d-md-block">
-					      	<a class="nav-link" href="index.php">Revenir à l'accueil</a>
-					    </li>
-				  	</ul>
-
-				  	<ul class="navbar-nav ml-auto">
-				  		
-		  				<span class='navbar-text'>
-							<strong><?= $_SESSION['userName'] ?></strong> | 
-		  				</span>
-		  				<li class="nav-item">
-				      		<a class="nav-link" href="index.php?p=logout">
-				      			Déconnexion <i class="fas fa-sign-out-alt"></i>
-				      		</a>
-				   		</li>
-
-					</ul>
-				</div>
-			</nav>
+			<?php include('navbar.php'); ?>
 
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
@@ -111,32 +84,7 @@
 
 	   	<?php 
 
-			if (!empty($_SESSION['alertSuccess'])) 
-			{
-				echo '<div class="alert alert-success fade show" role="alert">' .
-
-					$_SESSION['alertSuccess'] . 
-
-					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>';
-
-				$_SESSION['alertSuccess'] = null;
-			} 
-			elseif (!empty($_SESSION['alertFailure']))
-			{
-				echo '<div class="alert alert-danger fade show" role="alert">' .
-
-					$_SESSION['alertFailure'] . 
-
-					'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-				</div>';
-
-				$_SESSION['alertFailure'] = null;
-			}
+			include('alerts.php');
 
 	  		echo $content;
 	  	?>
@@ -154,19 +102,9 @@
 		<!-- Fonctionnement des tooltips de bootstrap -->
 		<script>
 			// Fonctionnement du tooltip de bootstrap
-			// $(document).ready(function(){
-			// 	$('[data-toggle="tooltip"]').tooltip();
-			// });
-
-			// // Récupération des informations dans les champs du modal bootstrap
-			// $('#modalReport').on('show.bs.modal', function (event) {
-			// 	var button = $(event.relatedTarget);
-			// 	var recipient = button.data('whatever');
-			// 	var recipient_comment = button.data('comment');
-			// 	var modal = $(this);
-			// 	modal.find('#reported_comment').val(recipient);
-			// 	modal.find('#recipient_comment').val(recipient_comment);
-			// });
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
 		</script>
 
 		<!-- Fonction de défilement fluide entre les ancres -->
@@ -177,6 +115,9 @@
 
 		<!-- Script pour les alertes bootstrap -->
 		<script src="./public/js/alert.js"></script>
+
+		<!-- Script qui check le contenu des inputs (connexion, inscription) -->
+		<script src="./public/js/inputChecking.js"></script>
 			
 	</body>
 

@@ -312,6 +312,8 @@ img.img_alaska {
 	cursor: pointer;
 }
 
+
+
 /*------Comments------*/
 
 .btn-comment {
@@ -340,6 +342,15 @@ img.img_alaska {
 .show-comment {
 	background-color: #FFEEBA;
 }
+.public_delete_form {
+	display: inline-block;
+}
+.public_delete_comment {
+	background-color: rgba(0,0,0,0);
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
 
 /*----Report modal----*/
 
@@ -363,17 +374,21 @@ img.img_alaska {
 
 /*----------------------------REGISTRATION PAGE--------------------------------*/
 
-.registration_page, .connection_page {
-	min-height: 100vh;
-	background-image: url("../img/alaska_mountains.jpg");
+.registration_page, .connection_page, .settings_page {
+	padding-top: 10vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-
+.body_connection_page, .body_registration_page, .body_settings_page {
+	background-image: url("../img/alaska_mountains.jpg");
+}
 .row_contents {
-	background-color: white;
+	background-color: #F8F9FA;
 	border-radius: 4px;
+}
+.button_group {
+	margin-bottom: 50px;
 }
 
 

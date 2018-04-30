@@ -90,20 +90,16 @@
 		  					
 		  				}
 
-		  			?>
+						$results = $comments->fetchAll();
 
-				<?php 
+						if(count($results) == 0)
+						{
+							echo "<p>Il n'y a pas encore de commentaires</p>";
+						}
 
-					$results = $comments->fetchAll();
+						foreach ($results as $key => $result) {
 
-					if(count($results) == 0)
-					{
-						echo "<p>Il n'y a pas encore de commentaires</p>";
-					}
-
-					foreach ($results as $key => $result) {
-
-				?>
+					?>
 				<div class="row comment <?php if($_SESSION['userName'] == $result['pseudo']){ echo 'own-comment';}?> <?php if($_GET['commentId'] == $result['id']){ echo 'show-comment';} ?>" id="<?= $result['id'] ?>">
 					
 					<div class="col-12">
@@ -124,6 +120,27 @@
 						</span>
 
 						<?php 
+
+							}
+							else
+							{
+
+						?>
+
+						<form action="index.php?p=deleteComment&amp;id=<?= $_GET['id'] ?>" method="POST" class="public_delete_form">
+
+							<input type="hidden" name="commentId" value="<?= $result['id'] ?>">
+							<input type="hidden" name="commentPseudo" value="<?= $result['pseudo'] ?>">
+
+							<span data-toggle="tooltip" data-placement="left" title="Supprimer ce commentaire">
+								<button type="submit" name="delete" value="delete" class="public_delete_comment report_logo">
+									<i class="fas fa-times-circle"></i>
+								</button>
+							</span>
+
+						</form>
+
+						<?php
 
 							}
 
