@@ -231,14 +231,19 @@ img.img_alaska {
 	color: #212529;
 	transition: background-color 0.2s;
 }
+.post h3 {
+	font-size: 1.6rem;
+}
 .post {
-	margin-bottom: 30px;
+	margin-bottom: 40px;
+	padding: 30px;
 }
 .paragraph {
 	text-align: justify;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	line-height: 28px;
-	letter-spacing: 2px;
+	letter-spacing: 1.7px;
+	padding: 15px 0;
 }
 .post:hover, .links_all_chapter:hover {
 	background-color: rgb(230,230,230);
@@ -252,6 +257,22 @@ img.img_alaska {
 .nbrComments {
 	text-transform: initial !important;
 	font-style: italic;
+}
+.links_all_chapter p:first-child {
+	margin-top: 10px;
+}
+.chaptersLink {
+	color: #212529;;
+}
+.chaptersLink:hover {
+	color: #212121;
+	text-decoration: none;
+}
+.paragraphLink {
+	margin-bottom: 10px;
+	font-size: 1rem;
+	line-height: 28px;
+	letter-spacing: 1.5px;
 }
 
 /*----------------------------POST--------------------------------*/

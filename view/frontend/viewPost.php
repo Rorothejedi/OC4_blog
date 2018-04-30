@@ -48,7 +48,7 @@
 
 		  				if (!empty($_SESSION['userName'])) 
 		  				{
-		  					//Poster commentaires
+
 		  			?>
 
 		  			<div class="container-post-comment">

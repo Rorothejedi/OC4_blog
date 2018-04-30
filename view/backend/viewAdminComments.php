@@ -55,11 +55,11 @@
 							    	<a href="index.php?p=post&amp;id=<?= $value['postId'] ?>&amp;commentId=<?= $value['commentId'] ?>#<?= $value['commentId'] ?>" class="btn btn-outline-primary">
 							    		<i class="fas fa-eye"></i>
 							    	</a>
-							    	<a href="#" class="btn btn-outline-secondary">
+							    	<a href="index.php?p=editComment&amp;commentId=<?= $value['commentId'] ?>" class="btn btn-outline-secondary">
 							    		<i class="fas fa-pencil-alt"></i>
 							    	</a>
 							    	<form action="index.php?p=deleteComment" method="POST" style="display: inline-block;">
-										<input type="hidden" name="commentId" value="<?= $value['id'] ?>">
+										<input type="hidden" name="commentId" value="<?= $value['commentId'] ?>">
 							    		<button type="submit" name="delete" value="delete" class="btn btn-outline-danger" OnClick="return confirm('Voulez-vous vraiment supprimer ce commentaire ?');">
 							    			<i class="fas fa-times"></i>
 							    		</button>

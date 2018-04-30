@@ -53,7 +53,7 @@
 									
 									</p>
 									<h3><?= $res['title'] ?></h3>
-									<p class="paragraph"><?= $res['SUBSTR(content, 1, 200)'] ?></p>
+									<div class="paragraph"><?= $res['SUBSTR(content, 1, 200)'] ?></div>
 									<button class="btn btn-dark">Lire le chapitre</button>
 								</div>
 							</a>
@@ -81,7 +81,7 @@
 						
 						 	?>
 							
-								<a href="index.php?p=post&amp;id=<?= $res['id'] ?>"><?= $res['title'] ?></a><br>
+								<p class="paragraphLink"><a href="index.php?p=post&amp;id=<?= $res['id'] ?>" class="chaptersLink"><?= $res['title'] ?></a></p>
 
 							<?php 
 

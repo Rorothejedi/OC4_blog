@@ -94,8 +94,6 @@ class PostManager extends Database
             'title' => $post->title(),
             'content' => $post->content()
         ));
-
-        $req->closeCursor();
     }
 
     // Méthode pour obtenir le nombre de commentaires pour chaque post

@@ -1,6 +1,6 @@
 <?php 
 
-session_start();
+if(session_id() == "") session_start();
 
 // Chargement des classes
 require_once('./model/Post.php');
@@ -12,8 +12,9 @@ require_once('./model/UserManager.php');
 
 
 // Chargement des fonctions de contrôle
-// 
+
 // -----------------  Display Pages  ---------------------
+
 function home()
 {
 	require('./view/frontend/viewHome.php');
@@ -39,6 +40,7 @@ function displayConfirmRegistration()
 
 // -----------------  Alerts  ---------------------
 
+
 function alertSuccess($message)
 {
 	$_SESSION['alertSuccess'] = $message;
@@ -51,6 +53,7 @@ function alertFailure($message, $page)
 
 
 // -----------------  Users  ---------------------
+
 
 function registrationUser($pseudo, $pass, $email)
 {
@@ -101,7 +104,9 @@ function logout()
 	session_destroy();
 }
 
+
 // -----------------  Posts  ---------------------
+
 
 function listPosts()
 {
@@ -123,7 +128,9 @@ function displayPost()
 	require('./view/frontend/viewPost.php');
 }
 
+
 // -----------------  Comments  ---------------------
+
 
 function reportComment($commentId)
 {
@@ -148,134 +155,4 @@ function newComment($postId, $pseudo, $content)
 	$commentManager->addComment($newComment);
 
 	header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
-}	
-
-
-// ---------------------------  ADMIN  --------------------------------
-
-
-// ---------------  Posts  --------------------
-
-
-function adminPosts()
-{
-	$postManager = new PostManager();
-	$posts = $postManager->getPosts();
-
-	require('./view/backend/viewAdminPosts.php');
-}
-
-function newPost()
-{
-	require('./view/backend/viewNewPost.php');
-}
-function processNewPost($title, $content)
-{
-	$newPost = new Post([
-		'title' => $title,
-		'content' => $content
-	]);
-
-	$postManager = new PostManager();
-	$postManager->addPost($newPost);
-	header('Location: index.php?p=adminPosts');
-}
-
-function editPost()
-{
-	$postManager = new PostManager();
-
-	$post = $postManager->getPost($_GET['id']);
-
-	require('./view/backend/viewEditPost.php');
-}
-function processEditPost($postId, $title, $content) 
-{
-	$newPost = new Post([
-		'id' => $postId,
-		'title' => $title,
-		'content' => $content
-	]);
-
-	$postManager = new PostManager();
-	$postManager->editPost($newPost);
-	header('Location: index.php?p=adminPosts');
-}
-
-function deletePost($postId)
-{
-	$postManager = new PostManager();
-	$deleteTransaction = $postManager->deletePost($postId);
-
-	if ($deleteTransaction === true) 
-	{
-		header('Location: index.php?p=adminPosts');
-	} 
-	else 
-	{
-		throw new Exception('Oups ! Un problème est survenu...');
-	}
-
-}
-
-
-// ---------------  Comments  -------------------
-
-
-
-function adminComments()
-{
-	$commentManager = new CommentManager();
-	$comments = $commentManager->getCommentsByReport();
-
-	require('./view/backend/viewAdminComments.php');
-}
-function showComment()
-{
-
-}
-function editComment()
-{
-
-}
-function deleteComment($commentId)
-{
-	$commentManager = new CommentManager();
-	$commentManager->deleteComment($commentId);
-
-	header('Location: index.php?p=adminComments');
-}
-
-
-// ---------------  Users  -------------------
-
-
-function adminUsers()
-{
-	$userManager = new UserManager();
-	$users = $userManager->getUsers();
-
-	require('./view/backend/viewAdminUsers.php');
-}
-function newAdminUser()
-{
-
-}
-function editUser()
-{
-
-}
-function deleteUser($userId)
-{
-	$userManager = new UserManager();
-	$deleteTransaction = $userManager->deleteUser($userId);
-
-	if ($deleteTransaction === true)
-	{
-		header('Location: index.php?p=adminUsers');
-	}
-	else 
-	{
-		throw new Exception('Oups ! Un problème est survenu...');
-	}
 }

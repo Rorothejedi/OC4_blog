@@ -1,6 +1,7 @@
 <?php 
 
 require('controller/controllerFrontend.php');
+require('controller/controllerBackend.php');
 
 try 
 {
@@ -327,6 +328,56 @@ try
 			else
 			{
 				throw new Exception('Vous ne pouvez pas supprimer de commentaires');
+			}
+			break;
+
+		case 'editComment':
+			editComment();
+			break;
+
+		case 'processEditComment':
+			if (isset($_SESSION['access']) && $_SESSION['access'] == 1) 
+			{
+				if (isset($_GET['commentId']) && $_GET['commentId'] > 0)
+				{
+					if (isset($_POST['edit']) && $_POST['edit'] == 'edit') 
+					{
+						if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['valueReport']))
+						{
+
+							if (isset($_POST['initReport'])) 
+							{
+								alertSuccess('Le commentaire a été edité avec succès et les signalements réinitialisés');
+								$report = 0;
+							} 
+							else
+							{
+								alertSuccess('Le commentaire a été edité avec succès');
+								$report = $_POST['valueReport'];
+							}
+					
+							
+							processEditComment($_GET['commentId'], $_POST['content'], $report);
+						}
+						else
+						{
+							alertFailure('Vous ne pouvez pas effectuer cette action', 'editComment&commentId=' . $_GET['commentId']);
+						}
+					}
+					else
+					{
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'editComment&commentId=' . $_GET['commentId']);
+					}
+				}
+				else
+				{
+					alertFailure('Aucun identifiant de commentaire envoyé', 'adminComments');
+				}
+				
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas éditer de commentaire');
 			}
 			break;
 
