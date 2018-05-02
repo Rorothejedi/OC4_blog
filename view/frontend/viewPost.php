@@ -119,10 +119,10 @@
 							<i class="fas fa-exclamation-circle report_logo" data-toggle="modal" data-target="#modalReport" data-whatever="<?= $result['content'] ?>" data-comment="<?= $result['id'] ?>"></i>
 						</span>
 
-						<?php 
-
+						<?php
+								
 							}
-							else
+							elseif (!empty($_SESSION['userName']) && $_SESSION['userName'] == $result['pseudo']) 
 							{
 
 						?>

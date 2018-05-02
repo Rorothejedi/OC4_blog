@@ -142,11 +142,23 @@ function newAdminUser()
 
 function editUser()
 {
+	$userManager = new UserManager();
+	$user = $userManager->getUser($_GET['userPseudo']);
+
 	require('./view/backend/viewEditUser.php');
 }
-function processEditUser()
+function processEditUser($id, $pseudo, $email, $pass)
 {
-	
+	$newUser = new User([
+		'id'     => $id,
+		'pseudo' => $pseudo,
+		'email'  => $email,
+		'pass'   => $pass
+	]);
+
+	$userManager = new UserManager();
+	$userManager->editUser($newUser);
+	header('Location: index.php?p=adminUsers');
 }
 function deleteUser($userId)
 {

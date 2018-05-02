@@ -39,7 +39,8 @@
 
 	  							$data = $users->fetchAll();
 
-								foreach ($data as $key => $value) {
+								foreach ($data as $key => $value) 
+								{
 
 	  						?>
 
@@ -48,21 +49,29 @@
 						      	<td class="text-center align-middle"><?= $value['email'] ?></td>
 							    <td class="text-center align-middle">
 							    	<?php 
-							    		if ($value['access'] == 1) {
+							    		if ($value['access'] == 1) 
+							    		{
 							    			echo "Administrateur";
-							    		} else {
+							    		} 
+							    		else 
+							    		{
 							    			echo "Membre";
 							    		}
 							    	?>
 							    </td>
-							    <td class="align-middle d-flex justify-content-around" data-user="$value['id']">
-							    	<a href="#" class="btn btn-outline-secondary">
-							    		<i class="fas fa-pencil-alt"></i>
-							    	</a>
+							    <td class="align-middle d-flex justify-content-around">
+							    	
 
 							    <?php 
-							    	if ($value['pseudo'] != $_SESSION['userName']) {
+
+							    	if ($value['pseudo'] != $_SESSION['userName']) 
+							    	{
+
 							    ?>
+
+							    	<a href="index.php?p=editUser&amp;userPseudo=<?= $value['pseudo'] ?>" class="btn btn-outline-secondary">
+							    		<i class="fas fa-pencil-alt"></i>
+							    	</a>
 
 							    	<form action="index.php?p=deleteUser" method="POST" style="display: inline-block;">
 										<input type="hidden" name="userId" value="<?= $value['id'] ?>">
@@ -72,7 +81,24 @@
 							    	</form>
 							    
 							    <?php
+
 							    	}
+							    	else
+							    	{
+
+							    ?>
+
+							   		<a href="index.php?p=userSettings" class="btn btn-outline-secondary">
+							    		<i class="fas fa-pencil-alt"></i>
+							    	</a>
+
+
+
+
+							    <?php
+
+							    	}
+
 							    ?>
 							    </td>
 							   

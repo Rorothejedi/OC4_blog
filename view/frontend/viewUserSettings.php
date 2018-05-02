@@ -48,9 +48,22 @@
 						
 						<div class="button_group">
 							<button type="submit" class="btn btn-primary" name="editUser" value="editUser">Modifier</button>
+
+							<?php 
+
+								if ($_SESSION['access'] != 1) {
+							?>
+
 							<button type="submit" class="btn btn-danger" name="deleteUser" value="deleteUser" onclick="if(confirm('Êtes-vous vraiment sûr de vouloir supprimer votre compte ?')){return confirm('Attention !\nCette action entrainera la suppression DEFINITIVE de votre compte ainsi que de tous les commentaires que vous avez postés !');}else{return false;}">
 								SUPPRIMER DEFINITIVEMENT LE COMPTE
-							</a>
+							</button>
+
+							<?php 
+
+								}
+
+							 ?>
+							
 						</div>
 
 					</form>

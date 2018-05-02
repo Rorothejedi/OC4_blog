@@ -217,7 +217,7 @@ try
 
 		// Modification et/ou suppression d'un utilisateur depuis sa page de settings
 		case 'processEditUserSettings':
-			if (isset($_SESSION['userName']) && $_SESSION['userName'] && isset($_POST['idUser']) && !empty($_POST['idUser'])) 
+			if (isset($_SESSION['userName']) && !empty($_SESSION['userName']) && isset($_POST['idUser']) && !empty($_POST['idUser'])) 
 			{
 				if (isset($_POST['editUser']) && $_POST['editUser'] == 'editUser') 
 				{
@@ -232,23 +232,25 @@ try
 						if (isset($_POST['pass']) && !empty($_POST['pass']) 
 							&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
 						{
-							$pass        = htmlspecialchars($_POST['pass']);
+							$passInitial = htmlspecialchars($_POST['pass']);
 							$confirmPass = htmlspecialchars($_POST['confirmPass']);
 
-							if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+							if (strlen($passInitial) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
 				    		{
-								if ($pass == $confirmPass)
+								if ($passInitial == $confirmPass)
 								{
-									$pass = password_hash($pass, PASSWORD_DEFAULT);
+									$pass = password_hash($passInitial, PASSWORD_DEFAULT);
 								}
 								else
 								{
 									alertFailure('Les mots de passes renseignés doivent être identiques', 'userSettings');
+									exit();
 								}
 							}
 							else
 							{
 								alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'userSettings');
+								exit();
 							}
 						}
 						// Si les inputs pour modifier le mot de passe reste vierge
@@ -572,6 +574,90 @@ try
 			else
 			{
 				throw new Exception('L\'administrateur n\'a pas pû être créé');
+			}
+			break;
+
+		case 'editUser':
+			if (isset($_GET['userPseudo']) && !empty($_GET['userPseudo'])) {
+				editUser();
+			}
+			break;
+
+		case 'processEditUser':
+			if (isset($_SESSION['userName']) && !empty($_SESSION['userName']) 
+				&& isset($_POST['idUser']) && !empty($_POST['idUser']) 
+				&& isset($_GET['userPseudo']) && !empty($_GET['userPseudo']))
+			{
+				if (isset($_POST['editUser']) && $_POST['editUser'] == 'editUser') 
+				{
+					if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+						&& isset($_POST['email']) && !empty($_POST['email'])) 
+					{
+						$pseudo = htmlspecialchars($_POST['pseudo']);
+						$email  = htmlspecialchars($_POST['email']);
+						$id = (int) $_POST['idUser'];
+
+						// Si on modifie le mot de passe
+						if (isset($_POST['pass']) && !empty($_POST['pass']) 
+							&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+						{
+							$passInitial = htmlspecialchars($_POST['pass']);
+							$confirmPass = htmlspecialchars($_POST['confirmPass']);
+
+							if (strlen($passInitial) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
+				    		{
+								if ($passInitial == $confirmPass)
+								{
+									$pass = password_hash($passInitial, PASSWORD_DEFAULT);
+								}
+								else
+								{
+									alertFailure('Les mots de passes renseignés doivent être identiques', 'editUser&userPseudo=' . $_GET['userPseudo']);
+									exit();
+								}
+							}
+							else
+							{
+								alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'editUser&userPseudo=' . $_GET['userPseudo']);
+								exit();
+							}
+						}
+						// Si les inputs pour modifier le mot de passe reste vierge
+						elseif(isset($_POST['oldPass']) && !empty($_POST['oldPass']))
+						{
+							$pass = htmlspecialchars($_POST['oldPass']);
+						}
+
+						if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
+		    			{
+		    				if (filter_var($email, FILTER_VALIDATE_EMAIL))
+				   			{
+								processEditUser($id, $pseudo, $email, $pass);
+								alertSuccess('Les informations de l\'utilisateur ont bien été mises à jour !');
+				   			}
+				   			else
+				   			{
+				   				alertFailure('Cette adresse email n\'est pas valide', 'editUser&userPseudo=' . $_GET['userPseudo']);
+				   			}
+		    			}
+		    			else
+		    			{
+		    				alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'editUser&userPseudo=' . $_GET['userPseudo']);
+		    			}
+					}
+					else
+					{
+						alertFailure('Les champs "Nom d\'utilisateur" et "Email" doivent être correctement remplient', 'editUser&userPseudo=' . $_GET['userPseudo']);
+					}
+				}
+				else
+				{
+					alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'editUser&userPseudo=' . $_GET['userPseudo']);
+				}
+			}
+			else
+			{
+				throw new Exception('Vous ne pouvez pas modifier cet utilisateur');
 			}
 			break;
 
