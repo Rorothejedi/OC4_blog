@@ -1,10 +1,14 @@
-<?php $title = 'Blog Jean Fortroche | Gestion administrateur - Commentaires'; ?>
+<?php 
 
-<?php $body_class = 'admin_page' ?>
+	$title = 'Blog Jean Fortroche | Gestion administrateur - Commentaires';
+	$body_class = 'admin_page';
 
-<?php ob_start(); ?>
+	ob_start();
 
+?>
 
+	</header>
+		
 		<div class="container-fluid adminBackground">
 
 			<div class="row">
@@ -13,12 +17,10 @@
 
 			<div class="card">
 
+				<div class="card-header"></div>
+
 				<div class="table-responsive">
 					<table class="table table-hover">
-
-						<div class="card-header">
-							
-						</div>
 
 	  					<thead >
 	  						<tr class="text-center">
@@ -52,7 +54,7 @@
 							    <td class="text-center align-middle"><?= $value['comment_date'] ?></td>
 							    <td class="align-middle" data-comment="">
 							    	
-							    	<a href="index.php?p=post&amp;id=<?= $value['postId'] ?>&amp;commentId=<?= $value['commentId'] ?>#<?= $value['commentId'] ?>" class="btn btn-outline-primary">
+							    	<a href="index.php?p=post&amp;id=<?= $value['postId'] ?>&amp;commentId=<?= $value['commentId'] ?>#<?= $value['commentId'] ?>" target="_blank" class="btn btn-outline-primary">
 							    		<i class="fas fa-eye"></i>
 							    	</a>
 
@@ -86,13 +88,13 @@
 				</div>
 			</div>
 			
-
-
-
-
 		</div>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateBackend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateBackend.php');
+
+?>

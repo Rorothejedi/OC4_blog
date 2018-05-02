@@ -4,7 +4,7 @@
 
 <?php ob_start(); ?>
 	
-			<img src="./public/img/alaska.jpg" class="img_alaska" />
+			<img src="./public/img/alaska.jpg" class="img_alaska" alt="">
 
 			<h1 class="text-center title_page">Billet simple pour l'Alaska</h1>
 
@@ -54,7 +54,7 @@
 									</p>
 									<h3><?= $res['title'] ?></h3>
 									<div class="paragraph"><?= $res['SUBSTR(content, 1, 200)'] ?></div>
-									<button class="btn btn-dark">Lire le chapitre</button>
+									<div class="btn btn-dark">Lire le chapitre</div>
 								</div>
 							</a>
 

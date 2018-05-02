@@ -4,7 +4,7 @@
 
 <?php ob_start(); ?>
 	
-			<img src="./public/img/alaska.jpg" class="img_alaska" />
+			<img src="./public/img/alaska.jpg" class="img_alaska" alt="">
 
 			<h1 class="text-center title_page">Billet simple pour l'Alaska</h1>
 
@@ -161,7 +161,7 @@
 
 				<!-- Modal -->
 				<div class="modal fade" id="modalReport" tabindex="-1" role="dialog" aria-labelledby="modalReportCenter" aria-hidden="true">
-				  	<div class="modal-dialog modal-dialog-centered" role="document">
+				  	<div class="modal-dialog modal-dialog-centered" role="document" id="modalReportCenter">
 				    	<div class="modal-content">
 
 			      		<div class="modal-header modal-header-danger">
@@ -179,10 +179,10 @@
 			      			 <div class="modal-body">
 			      			 	<div class="form-group">
 			      			 		<label for="reported_comment">Commentaire que vous souhaitez signaler :</label>
-										<textarea id="reported_comment" class="form-control" type="text" disabled="disabled"> 
+										<textarea id="reported_comment" class="form-control" disabled="disabled"> 
 										</textarea>
 			      			 	</div>
-			      			 	<input type="hidden" id="recipient_comment" name="comment_id" type="text" aria-hidden="true">
+			      			 	<input type="hidden" id="recipient_comment" name="comment_id" aria-hidden="true">
 						      </div>
 
 				      		<div class="modal-footer">

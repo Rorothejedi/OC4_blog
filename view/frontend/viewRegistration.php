@@ -1,10 +1,14 @@
-<?php $title = 'Blog Jean Fortroche | Inscription utilisateur'; ?>
+<?php 
 
-<?php $body_class = 'body_registration_page'; ?>
+	$title = 'Blog Jean Fortroche | Inscription utilisateur';
+	$body_class = 'body_registration_page';
+	$class_header = 'top_registration_page';
 
-<?php $class_header = 'top_registration_page'; ?>
+	ob_start();
 
-<?php ob_start(); ?>
+?>
+
+	</header>
 
 		<div class="container registration_page">
 			
@@ -59,11 +63,14 @@
 					</form>
 
 				</div>
-
 			</div>
 		</div>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateFrontend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateFrontend.php');
+
+?>

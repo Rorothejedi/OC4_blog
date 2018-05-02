@@ -4,9 +4,11 @@
 	$body_class   = 'body_settings_page';
 	$class_header = 'top_settings'; 
 
-	ob_start(); 
+	ob_start();
 
 ?>
+
+	</header>
 
 		<div class="container settings_page">
 			
@@ -69,7 +71,6 @@
 					</form>
 
 				</div>
-
 			</div>
 		</div>
 

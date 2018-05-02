@@ -40,9 +40,9 @@ class CommentManager extends Database
     ");
 
     $req->execute(array(
-      'id' => $comment->id(),
+      'id'      => $comment->id(),
       'content' => $comment->content(),
-      'report' => $comment->report()
+      'report'  => $comment->report()
     ));
   }
 

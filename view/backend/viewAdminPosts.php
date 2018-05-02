@@ -1,9 +1,13 @@
-<?php $title = 'Blog Jean Fortroche | Gestion administrateur - Billets'; ?>
+<?php 
 
-<?php $class_header = 'admin_page'; ?>
+	$title = 'Blog Jean Fortroche | Gestion administrateur - Billets';
+	$class_header = 'admin_page';
 
-<?php ob_start(); ?>
+	ob_start();
 
+?>
+
+	</header>
 
 		<div class="container-fluid adminBackground">
 
@@ -13,14 +17,14 @@
 
 			<div class="card">
 
+				<div class="card-header d-flex flex-row-reverse">
+					<a href="index.php?p=newPost" class="btn btn-primary">
+						Nouveau billet <i class="fas fa-plus"></i>
+					</a>
+				</div>
+
 				<div class="table-responsive">
 					<table class="table table-hover">
-
-						<div class="card-header d-flex flex-row-reverse">
-							<a href="index.php?p=newPost" class="btn btn-primary">
-								Nouveau billet <i class="fas fa-plus"></i>
-							</a>
-						</div>
 
 	  					<thead >
 	  						<tr class="text-center">
@@ -46,7 +50,7 @@
 							    <td><?= $value['SUBSTR(content, 1, 200)'] ?></td>
 							    <td class="text-center align-middle"><?= $value['mini_date_post'] ?></td>
 							    <td class="align-middle">
-							    	<a href="index.php?p=post&amp;id=<?= $value['id'] ?>" class="btn btn-outline-primary">
+							    	<a href="index.php?p=post&amp;id=<?= $value['id'] ?>" target="_blank" class="btn btn-outline-primary">
 							    		<i class="fas fa-eye"></i>
 							    	</a>
 							    	<a href="index.php?p=editPost&amp;id=<?= $value['id'] ?>" class="btn btn-outline-secondary">
@@ -78,6 +82,10 @@
 		</div>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateBackend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateBackend.php'); 
+
+?>

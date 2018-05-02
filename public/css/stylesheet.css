@@ -1,20 +1,7 @@
-/*------------------------------Summary--------------------------------*/
 
-/*ALL*/
-/*Common ___________________ L.15 */
-
-/*FRONTEND*/
-/*Common ___________________ L.21 */
-/*Home Page ________________ L.32 */
-/*List Posts _______________ L.188 */
-/*Post _____________________ L.  */
-/*Registration page ________ L.  */
-/*Connection page __________ L.  */
-
-/*BACKEND*/
-/*Common ___________________ L.  */
 
 /*-------------------------------ALL-----------------------------------*/
+
 
 body {
     font-family: 'Raleway', sans-serif;
@@ -43,6 +30,7 @@ a.top {
 .hidden {
 	display: none;
 }
+
 
 /*----------------------------Home Page--------------------------------*/
 
@@ -136,12 +124,20 @@ hr {
 	width: 300px;
 	height: auto;
 	border-radius: 4px;
-	filter: grayscale(0.5);
+	-webkit-filter: grayscale(0.5);
+	        filter: grayscale(0.5);
 }
 .author_description {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 .author_description p {
 	text-align: justify;
@@ -207,7 +203,7 @@ img.img_alaska {
     position:fixed;
     top:0;
     left:0;
-    z-index:-1;
+    z-index:-5;
 }
 .top_list_posts {
 	height: 250px;
@@ -216,8 +212,9 @@ img.img_alaska {
 	font-family: 'Gaegu', cursive;
 	text-transform: uppercase;
 	margin: 70px auto;
+	z-index: -1;
+	position: relative;
 }
-
 #posts {
 	background-color: rgb(250,250,250);
 }
@@ -229,6 +226,8 @@ img.img_alaska {
 	border-radius: 4px;
 	padding: 15px;
 	color: #212529;
+	-webkit-transition: background-color 0.2s;
+	-o-transition: background-color 0.2s;
 	transition: background-color 0.2s;
 }
 .post h3 {
@@ -304,6 +303,8 @@ img.img_alaska {
 	font-size: 250%;
 }
 .report_logo {
+	-webkit-transition: color 0.2s;
+	-o-transition: color 0.2s;
 	transition: color 0.2s;
 	color: #6C757D;
 }
@@ -334,6 +335,8 @@ img.img_alaska {
 	padding: 25px 10px 25px 10px;
 	border-radius: 4px;
 	background-color: rgb(230,230,230);
+	-webkit-transition: background-color 1.5s;
+	-o-transition: background-color 1.5s;
 	transition: background-color 1.5s;
 }
 .own-comment {
@@ -376,9 +379,16 @@ img.img_alaska {
 
 .registration_page, .connection_page, .settings_page {
 	padding-top: 10vh;
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 .body_connection_page, .body_registration_page, .body_settings_page {
 	background-image: url("../img/alaska_mountains.jpg");

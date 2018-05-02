@@ -1,9 +1,13 @@
-<?php $title = 'Blog Jean Fortroche | Gestion administrateur - Edition Billet'; ?>
+<?php 
 
-<?php $class_header = 'admin_page'; ?>
+	$title = 'Blog Jean Fortroche | Gestion administrateur - Edition Billet';
+	$class_header = 'admin_page';
 
-<?php ob_start(); ?>
+	ob_start();
 
+?>
+
+	</header>
 
 		<div class="container-fluid adminBackground">
 
@@ -13,14 +17,12 @@
 
 			<div class="card">
 
-				<div class="card-header">
-
-				</div>
+				<div class="card-header"></div>
 
 				<form action="index.php?p=processEditPost&amp;id=<?= $post['id'] ?>" method="POST">
 
 					<div class="card-body">
-						<div class="row justify-content-center row_contents">
+						<div class="row justify-content-center">
 							<div class="col-lg-8">
 
 								<br>
@@ -49,6 +51,10 @@
 		</div>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateBackend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateBackend.php');
+
+?>

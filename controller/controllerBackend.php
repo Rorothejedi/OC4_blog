@@ -1,21 +1,12 @@
 <?php 
 
+
+// Vérification de l'existence de la session
 if(session_id() == "") session_start();
 
 
-// Chargement des classes
-require_once('./model/Post.php');
-require_once('./model/PostManager.php');
-require_once('./model/Comment.php');
-require_once('./model/CommentManager.php');
-require_once('./model/User.php');
-require_once('./model/UserManager.php');
-
-
 // Chargement des fonctions de contrôle
-
 // ---------------  Posts  --------------------
-
 
 function adminPosts()
 {

@@ -1,11 +1,14 @@
-<?php $title = 'Blog Jean Fortroche | Confirmation d\'inscription'; ?>
+<?php 
 
-<?php $body_class = 'body_registration_page' ?>
+	$title = 'Blog Jean Fortroche | Confirmation d\'inscription';
+	$body_class = 'body_registration_page';
+	$class_header = 'top_registration_page';
 
-<?php $class_header = 'top_registration_page'; ?>
+	ob_start();
 
-<?php ob_start(); ?>
+?>
 
+	</header>
 
 		<div class="container registration_page">
 			
@@ -32,8 +35,10 @@
 
 
 <?php 
+
 	$content = ob_get_clean();
 	$_SESSION['userName'] = null;
-?>
 
-<?php require('./view/template/templateFrontend.php'); ?>
+	require('./view/template/templateFrontend.php'); 
+
+?>

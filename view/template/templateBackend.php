@@ -1,3 +1,14 @@
+<?php
+
+	if ($_SESSION['access'] != 1 || !isset($_SESSION)) 
+	{ 
+		header('Location : index.php');
+		exit();
+	}
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -15,7 +26,7 @@
 		<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 
 		<!-- Polices Google Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Gaegu|Raleway:400,400i,700" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Gaegu%7CRaleway:400,400i,700" rel="stylesheet"> 
 		
 		<!-- Feuille de style CSS principales -->
 	    <link href="./public/css/stylesheet.css" rel="stylesheet">
@@ -46,20 +57,11 @@
 
 	<body>
 
-		<?php
-
-			if ($_SESSION['access'] != 1) 
-			{ 
-				header('Location : index.php');
-			}
-
-		?>
-
 		<header id="top" class="<?= $class_header ?>">
 
 			<?php include('navbar.php'); ?>
 
-			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbarAdmin">
 	    			<span class="navbar-toggler-icon"></span>

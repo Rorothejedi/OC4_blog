@@ -1,10 +1,13 @@
-<?php $title = 'Blog Jean Fortroche | Accueil'; ?>
+<?php 
 
-<?php $class_header = 'top_home'; ?>
+	$title = 'Blog Jean Fortroche | Accueil';
+	$class_header = 'top_home';
 
-<?php ob_start(); ?>
+	ob_start(); 
 
-		<img src="./public/img/aurora.jpg" class="img_aurora" />
+?>
+
+		<img src="./public/img/aurora.jpg" class="img_aurora" alt="">
 	
 		<div class="container">
 	  		<div class="row text_header">
@@ -142,7 +145,10 @@
 	</footer>
 		
 	
+<?php 
 
-<?php $content = ob_get_clean(); ?>
+	$content = ob_get_clean();
 
-<?php require('./view/template/templateFrontend.php'); ?>
+	require('./view/template/templateFrontend.php');
+
+?>

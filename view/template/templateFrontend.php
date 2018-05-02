@@ -4,7 +4,7 @@ Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
 Date d'achèvement : ../05/2018
 
-Dernière mise à jour : 30/04/2018 -->
+Dernière mise à jour : 02/05/2018 -->
 
 <!DOCTYPE html>
 
@@ -43,7 +43,7 @@ Dernière mise à jour : 30/04/2018 -->
 		<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 
 		<!-- Polices Google Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Gaegu|Raleway:400,400i,700" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Gaegu%7CRaleway:400,400i,700" rel="stylesheet"> 
 		
 		<!-- Feuille de style CSS principales -->
 	    <link href="./public/css/stylesheet.css" rel="stylesheet">
@@ -66,38 +66,12 @@ Dernière mise à jour : 30/04/2018 -->
 	   		<?php 
 
 	   			include('navbar.php');
-
-				if (!empty($_SESSION['alertSuccess'])) 
-				{
-					echo '<div class="alert alert-success fade show" role="alert">' .
-
-						$_SESSION['alertSuccess'] . 
-
-						'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-					</div>';
-
-					$_SESSION['alertSuccess'] = null;
-				} 
-				elseif (!empty($_SESSION['alertFailure']))
-				{
-					echo '<div class="alert alert-danger fade show" role="alert">' .
-
-						$_SESSION['alertFailure'] . 
-
-						'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-					</div>';
-
-					$_SESSION['alertFailure'] = null;
-				}
+				include('alerts.php');
 
 		  		echo $content;
 	  		?>
 
-
+		<!-- Bouton haut de page -->
 		<a href="#top" class="top d-none d-md-block">
 			<i class="fas fa-arrow-circle-up fa-3x hidden"></i>
 		</a>
@@ -107,46 +81,27 @@ Dernière mise à jour : 30/04/2018 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-		<!-- Fonctionnement des tooltips de bootstrap -->
+		<!-- Scripts court -->
 		<script>
 			// Fonctionnement du tooltip de bootstrap
 			$(document).ready(function(){
 				$('[data-toggle="tooltip"]').tooltip();
 			});
 
-			// Récupération des informations dans les champs du modal bootstrap
-			$('#modalReport').on('show.bs.modal', function (event) {
-
-				var button            = $(event.relatedTarget);
-				var recipient         = button.data('whatever');
-				var recipient_comment = button.data('comment');
-				var modal             = $(this);
-
-				modal.find('#reported_comment').val(strip_html_tags(recipient));
-				modal.find('#recipient_comment').val(recipient_comment);
-			});
-
-			function strip_html_tags(str)
-			{
-			   	if ((str === null) || (str === '')) 
-			   	{
-			       return false;
-			   	}
-			  	else 
-			  	{
-			  		str = str.toString();
-			  		return str.replace(/<[^>]*>/g, '');
-			  	}
-			}
-
-
+			// Rechargement du script resizing en cas d'erreur
+			function errorHandler(script) {
+        		script.src = "resizing.js";
+    		}
 		</script>
 
 		<!-- Fonction de redimmentionnement de l'image de fond -->
-		<script src="./public/js/resizing.js"></script>
+		<script src="./public/js/resizing.js" onerror="errorHandler(this)"></script>
 
 		<!-- Fonction de défilement fluide entre les ancres -->
 		<script src="./public/js/scroll.js"></script>
+
+		<!-- Fonction de récupération des informations dans les champs du modal bootstrap -->
+		<script src="./public/js/modalValue.js"></script>
 
 		<!-- Instanciation et initialisation des objects JavaScript -->
 		<script src="./public/js/global.js"></script>

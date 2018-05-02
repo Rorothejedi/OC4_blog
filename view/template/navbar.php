@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
+<nav class="navbar navbar-expand-md bg-light navbar-light">
 
 	<a class="navbar-brand" href="index.php">Jean Forteroche</a>
 
@@ -30,7 +30,10 @@
 			<li class="nav-item">
 			    <a class="nav-link" href="index.php?p=adminPosts">Accès admin</a> 
 			</li>
-			<span class='navbar-text'> | </span>
+			<li>
+				<span class='navbar-text d-none d-md-block'> | </span>
+			</li>
+			
 
   			<?php 
 
@@ -42,7 +45,9 @@
 					<strong><?= $_SESSION['userName'] ?></strong>  <i class="fas fa-cog"></i>
 				</a>
 			</li>
-			<span class='navbar-text'> | </span>
+			<li>
+				<span class='navbar-text d-none d-md-block'> | </span>
+			</li>
 			<li class="nav-item">
 	      		<a class="nav-link" href="index.php?p=logout">
 	      			Déconnexion <i class="fas fa-sign-out-alt"></i>

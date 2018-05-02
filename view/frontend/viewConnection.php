@@ -1,10 +1,14 @@
-<?php $title = 'Blog Jean Fortroche | Connexion utilisateur'; ?>
+<?php 
 
-<?php $body_class = 'body_connection_page'; ?>
+	$title = 'Blog Jean Fortroche | Connexion utilisateur';
+	$body_class = 'body_connection_page';
+	$class_header = 'top_connection_page';
 
-<?php $class_header = 'top_connection_page'; ?>
+	ob_start();
 
-<?php ob_start(); ?>
+?>
+
+	</header>
 
 		<div class="container connection_page">
 
@@ -26,13 +30,7 @@
 
 						<div class="form-group">
 							<input type="password" class="form-control" placeholder="Mot de passe" name="pass" required>
-							<!-- <p class="small"><a href="index.php?p=forgotPass">Mot de passe oublié ?</a></p> -->
 						</div>
-
-						<!-- <div class="form-check">
-						    <input type="checkbox" class="form-check-input" id="check">
-						    <label class="form-check-label" for="check">Se souvenir de moi</label>
-						</div> -->
 
 						<br>
 						
@@ -45,19 +43,18 @@
 								</p>
 						</div>
 					
-
 					</form>
 
 					<br>
 
-					
-
-
 				</div>
-
 			</div>
 		</div>
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateFrontend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateFrontend.php');
+
+?>

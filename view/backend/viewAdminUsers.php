@@ -1,9 +1,13 @@
-<?php $title = 'Blog Jean Fortroche | Gestion administrateur - Utilisateurs'; ?>
+<?php 
 
-<?php $body_class = 'admin_page' ?>
+	$title = 'Blog Jean Fortroche | Gestion administrateur - Utilisateurs';
+	$body_class = 'admin_page';
 
-<?php ob_start(); ?>
+	ob_start();
 
+?>
+
+		</header>
 
 		<div class="container-fluid adminBackground">
 
@@ -13,14 +17,14 @@
 
 			<div class="card">
 
+				<div class="card-header d-flex flex-row-reverse">
+					<a href="index.php?p=newAdminUser" class="btn btn-primary">
+						Nouvel administrateur <i class="fas fa-plus"></i>
+					</a>
+				</div>
+
 				<div class="table-responsive">
 					<table class="table table-hover">
-
-						<div class="card-header d-flex flex-row-reverse">
-							<a href="index.php?p=newAdminUser" class="btn btn-primary">
-								Nouvel administrateur <i class="fas fa-plus"></i>
-							</a>
-						</div>
 
 	  					<thead >
 	  						<tr class="text-center">
@@ -92,9 +96,6 @@
 							    		<i class="fas fa-pencil-alt"></i>
 							    	</a>
 
-
-
-
 							    <?php
 
 							    	}
@@ -112,19 +113,19 @@
 
 	  					</tbody>
 					</table>
-					<div class="card-footer">
 
-					</div>
+					<div class="card-footer"></div>
+
 				</div>
 			</div>
 			
-
-
-
-
 		</div>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateBackend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateBackend.php');
+
+?>

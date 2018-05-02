@@ -7,6 +7,7 @@
 
 ?>
 
+	</header>
 
 		<div class="container-fluid adminBackground">
 
@@ -16,9 +17,7 @@
 
 			<div class="card">
 
-				<div class="card-header">
-
-				</div>
+				<div class="card-header"></div>
 
 				<form action="index.php?p=processEditUser&amp;userPseudo=<?= $user->pseudo() ?>" method="POST">
 
