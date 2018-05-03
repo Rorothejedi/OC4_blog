@@ -33,7 +33,7 @@
 
 										<?php 
 
-											echo $res['date_post']. ' | '; 
+											echo $res['date_post']. '<br class="d-md-none"> | '; 
 
 											$countComments = (int) $nbrCommentsData[$key]['COUNT(c.id)'];
 
