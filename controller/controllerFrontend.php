@@ -58,7 +58,6 @@ function alertFailure($message, $page)
 
 // -----------------  Users  ---------------------
 
-
 function registrationUser($pseudo, $pass, $email, $access)
 {
 	$newUser = new User([
@@ -117,6 +116,14 @@ function logout()
 	session_destroy();
 }
 
+function getUser($pseudo)
+{
+	$userManager = new UserManager();
+	$user = $userManager->getUser($pseudo);
+
+	return $user;
+}
+
 
 // -----------------  Posts  ---------------------
 
@@ -139,6 +146,14 @@ function displayPost()
 	$comments = $commentManager->getComments($_GET['id']);
 	
 	require('./view/frontend/viewPost.php');
+}
+
+function getPost($id)
+{
+	$postManager = new PostManager();
+	$postId = $postManager->getPost($id);
+
+	return $postId;
 }
 
 
@@ -168,6 +183,14 @@ function newComment($postId, $pseudo, $content)
 	$commentManager->addComment($newComment);
 
 	header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
+}
+
+function getComment($commentId)
+{
+	$commentManager = new CommentManager();
+	$comment = $commentManager->getComment($commentId);
+
+	return $comment;
 }
 
 

@@ -1,6 +1,5 @@
 $('.alert').delay(7000).fadeOut();
 
-
 function commentDelay()
 {
 	if ($('.show-comment').hasClass("own-comment"))

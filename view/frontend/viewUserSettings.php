@@ -29,7 +29,7 @@
 
 						<div class="form-group">
 							<label for="email">Email :</label>
-							<input type="text" class="form-control" id="email" name="email" value="<?= $user->email() ?>" required>
+							<input type="email" class="form-control" id="email" name="email" value="<?= $user->email() ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 						</div>
 
 						<div class="form-group">

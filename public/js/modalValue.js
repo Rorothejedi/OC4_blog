@@ -1,6 +1,6 @@
 // Récupération des informations dans les champs du modal bootstrap
-$('#modalReport').on('show.bs.modal', function (event) {
-
+$('#modalReport').on('show.bs.modal', function (event) 
+{
 	var button            = $(event.relatedTarget);
 	var recipient         = button.data('whatever');
 	var recipient_comment = button.data('comment');

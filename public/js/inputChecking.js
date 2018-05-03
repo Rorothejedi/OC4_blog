@@ -3,7 +3,7 @@ function checkPseudo(input, text)
 	input.change(function()
 	{
 
-		if ($(this).val().length > 2 && $(this).val().length <= 25)
+		if ($(this).val().length >= 2 && $(this).val().length <= 25)
 		{
 			$(this).addClass('is-valid').removeClass('is-invalid');
 			text.removeClass('text-muted').addClass('text-success').removeClass('text-danger');
@@ -19,7 +19,7 @@ function checkPseudo(input, text)
 
 function checkEmail(input, text)
 {
-	var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+	var regex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 	input.change(function()
 	{
@@ -43,7 +43,7 @@ function checkPass(input, confirmInput, text)
 
 	input.change(function()
 	{
-		if ($(this).val().length >= 12 && regex.test(input.val()))
+		if ($(this).val().length >= 8 && regex.test(input.val()))
 		{
 			$(this).addClass('is-valid').removeClass('is-invalid');
 			confirmInput.addClass('is-valid').removeClass('is-invalid');

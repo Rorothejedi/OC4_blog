@@ -7,7 +7,7 @@
 
 ?>
 
-		<img src="./public/img/aurora.jpg" class="img_aurora" alt="">
+		<img src="./public/img/aurora.jpg" class="img_aurora hidden" alt="">
 	
 		<div class="container">
 	  		<div class="row text_header">

@@ -29,7 +29,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Gaegu%7CRaleway:400,400i,700" rel="stylesheet"> 
 		
 		<!-- Feuille de style CSS principales -->
-	    <link href="./public/css/stylesheet.css" rel="stylesheet">
+	    <link href="./public/css/stylesheet.min.css" rel="stylesheet">
 
 	    <title><?= $title ?></title>
 

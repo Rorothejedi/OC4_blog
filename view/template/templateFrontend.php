@@ -2,9 +2,9 @@
 
 Réalisé par Rodolphe Cabotiau
 Date de début de projet : 18/04/2018
-Date d'achèvement : ../05/2018
+Date d'achèvement : 03/05/2018
 
-Dernière mise à jour : 02/05/2018 -->
+Dernière mise à jour : 03/05/2018 -->
 
 <!DOCTYPE html>
 
@@ -44,9 +44,9 @@ Dernière mise à jour : 02/05/2018 -->
 
 		<!-- Polices Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Gaegu%7CRaleway:400,400i,700" rel="stylesheet"> 
-		
+
 		<!-- Feuille de style CSS principales -->
-	    <link href="./public/css/stylesheet.css" rel="stylesheet">
+	    <link href="./public/css/stylesheet.min.css" rel="stylesheet">
 
 	    <title><?= $title ?></title>
 
@@ -81,17 +81,15 @@ Dernière mise à jour : 02/05/2018 -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-		<!-- Scripts court -->
+		<!-- Script de fonctionnement du tooltip de bootstrap -->
 		<script>
-			// Fonctionnement du tooltip de bootstrap
 			$(document).ready(function(){
 				$('[data-toggle="tooltip"]').tooltip();
-			});
 
-			// Rechargement du script resizing en cas d'erreur
-			function errorHandler(script) {
-        		script.src = "resizing.js";
-    		}
+				function errorHandler(script) {
+        			script.src = "./public/js/resizing.js";
+    			}
+			});
 		</script>
 
 		<!-- Fonction de redimmentionnement de l'image de fond -->

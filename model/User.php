@@ -60,7 +60,7 @@ class User
 
 	public function setPass($pass)
 	{
-		if(strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass))
+		if(strlen($pass) >= 8 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass))
 		{
 			$this->_pass = $pass;
 		}

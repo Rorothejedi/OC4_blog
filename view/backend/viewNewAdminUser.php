@@ -41,7 +41,7 @@
 								<div class="form-group">
 
 									<label for="email">Email :</label>
-									<input type="text" class="form-control" id="email" name="email" value="<?php if(!empty($_SESSION['email'])){ echo $_SESSION['email'];} ?>" required>
+									<input type="email" class="form-control" id="email" name="email" value="<?php if(!empty($_SESSION['email'])){ echo $_SESSION['email'];} ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 									<small class="form-text text-muted small-email">Veuillez saisir une adresse e-mail valide</small>
 
 								</div>

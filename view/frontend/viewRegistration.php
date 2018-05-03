@@ -33,7 +33,7 @@
 						<div class="form-group">
 
 							<label for="email">Email :</label>
-							<input type="text" class="form-control" id="email" name="email" value="<?php if(!empty($_SESSION['email'])){ echo $_SESSION['email'];} ?>" required>
+							<input type="email" class="form-control" id="email" name="email" value="<?php if(!empty($_SESSION['email'])){ echo $_SESSION['email'];} ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 							<small class="form-text text-muted small-email">Veuillez saisir une adresse e-mail valide</small>
 
 						</div>
@@ -45,7 +45,7 @@
 
 							<label for="password">Confirmer le mot de passe :</label>
 							<input type="password" class="form-control" id="confirmPassword" name="confirmPass" required>
-							<small class="form-text text-muted small-pass">Veuillez saisir et confirmer le mot de passe que vous avez choisi, celui-ci doit contenir 12 caractères minimum et être composé de chiffres et de lettres</small>
+							<small class="form-text text-muted small-pass">Veuillez saisir et confirmer le mot de passe que vous avez choisi, celui-ci doit contenir 8 caractères minimum et être composé de chiffres et de lettres</small>
 
 						</div>
 

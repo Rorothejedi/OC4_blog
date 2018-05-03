@@ -25,7 +25,7 @@
 					<form action="index.php?p=connection" method="POST">
 
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Nom d'utilisateur" name="pseudo" required>
+							<input type="text" class="form-control" placeholder="Nom d'utilisateur" name="pseudo" value="<?php if(!empty($_SESSION['pseudo'])){ echo $_SESSION['pseudo'];} ?>" required>
 						</div>
 
 						<div class="form-group">

@@ -1,8 +1,11 @@
-<?php $title = 'Blog Jean Fortroche | Liste des billets'; ?>
+<?php 
 
-<?php $class_header = 'top_list_posts'; ?>
+	$title = 'Blog Jean Fortroche | Liste des billets';
+	$class_header = 'top_list_posts';
 
-<?php ob_start(); ?>
+	ob_start(); 
+
+?>
 	
 			<img src="./public/img/alaska.jpg" class="img_alaska" alt="">
 
@@ -90,15 +93,17 @@
 					 		?>
 
 						</div>
-
 					</div>
 				</div>
-				
 			</div>
 
 		</section>
 
 
-<?php $content = ob_get_clean(); ?>
+<?php 
 
-<?php require('./view/template/templateFrontend.php'); ?>
+	$content = ob_get_clean();
+
+	require('./view/template/templateFrontend.php');
+
+?>

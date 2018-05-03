@@ -42,7 +42,7 @@ try
 
 				    	if ($resultPseudo->pseudo() != $pseudo && $resultPseudo->email() != $email) 
 				    	{
-				    		if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+				    		if (strlen($pass) >= 8 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
 				    		{
 				    			if ($pass == $confirmPass) 
 				    			{
@@ -57,7 +57,7 @@ try
 				    		}
 				    		else
 				    		{
-				    			alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'register');
+				    			alertFailure('Le mot de passe doit contenir au moins 8 caractères avec des chiffres et des lettres', 'register');
 				    		}
 				    	}
 				    	else 
@@ -113,6 +113,8 @@ try
 		
 				if ($pseudo == $resultPseudo->pseudo())
 				{
+					$_SESSION['pseudo'] = $pseudo;
+					
 					if (password_verify($pass, $resultPseudo->pass()))
 					{
 						$adminAccess = 1;
@@ -156,7 +158,16 @@ try
 		case 'post':
 		 	if (isset($_GET['id']) && $_GET['id'] > 0) 
 		 	{
-            	displayPost();
+		 		$postId = getPost($_GET['id']);
+
+		 		if ($postId['id']) 
+		 		{
+		 			displayPost();
+		 		}
+		 		else
+		 		{
+		 			alertFailure('Ce billet n\'existe pas', 'listPosts');
+		 		}
             } 
             else 
             {
@@ -209,6 +220,7 @@ try
 		// ------- Users Settings --------
 
 		case 'userSettings':
+
 			if (isset($_SESSION['userName']) && !empty($_SESSION['userName']))
 			{
 				userSettings($_SESSION['userName']);
@@ -217,88 +229,94 @@ try
 
 		// Modification et/ou suppression d'un utilisateur depuis sa page de settings
 		case 'processEditUserSettings':
-			if (isset($_SESSION['userName']) && !empty($_SESSION['userName']) && isset($_POST['idUser']) && !empty($_POST['idUser'])) 
+
+			if (isset($_SESSION['userName']) && !empty($_SESSION['userName'])) 
 			{
-				if (isset($_POST['editUser']) && $_POST['editUser'] == 'editUser') 
+				$user = getUser($_SESSION['userName']);
+
+				if (isset($_POST['idUser']) && !empty($_POST['idUser']) && $user->id() == $_POST['idUser']) 
 				{
-					if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
-						&& isset($_POST['email']) && !empty($_POST['email'])) 
+					if (isset($_POST['editUser']) && $_POST['editUser'] == 'editUser') 
 					{
-						$pseudo = htmlspecialchars($_POST['pseudo']);
-						$email  = htmlspecialchars($_POST['email']);
-						$id = (int) $_POST['idUser'];
-
-						// Si on modifie le mot de passe
-						if (isset($_POST['pass']) && !empty($_POST['pass']) 
-							&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+						if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) 
+							&& isset($_POST['email']) && !empty($_POST['email'])) 
 						{
-							$passInitial = htmlspecialchars($_POST['pass']);
-							$confirmPass = htmlspecialchars($_POST['confirmPass']);
+							$pseudo = htmlspecialchars($_POST['pseudo']);
+							$email  = htmlspecialchars($_POST['email']);
+							$id = (int) $_POST['idUser'];
 
-							if (strlen($passInitial) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
-				    		{
-								if ($passInitial == $confirmPass)
-								{
-									$pass = password_hash($passInitial, PASSWORD_DEFAULT);
+							// Si on modifie le mot de passe
+							if (isset($_POST['pass']) && !empty($_POST['pass']) 
+								&& isset($_POST['confirmPass']) && !empty($_POST['confirmPass'])) 
+							{
+								$passInitial = htmlspecialchars($_POST['pass']);
+								$confirmPass = htmlspecialchars($_POST['confirmPass']);
+
+								if (strlen($passInitial) >= 8 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
+					    		{
+									if ($passInitial == $confirmPass)
+									{
+										$pass = password_hash($passInitial, PASSWORD_DEFAULT);
+									}
+									else
+									{
+										alertFailure('Les mots de passes renseignés doivent être identiques', 'userSettings');
+										exit();
+									}
 								}
 								else
 								{
-									alertFailure('Les mots de passes renseignés doivent être identiques', 'userSettings');
+									alertFailure('Le mot de passe doit contenir au moins 8 caractères avec des chiffres et des lettres', 'userSettings');
 									exit();
 								}
 							}
-							else
+							// Si les inputs pour modifier le mot de passe reste vierge
+							elseif(isset($_POST['oldPass']) && !empty($_POST['oldPass']))
 							{
-								alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'userSettings');
-								exit();
+								$pass = htmlspecialchars($_POST['oldPass']);
 							}
-						}
-						// Si les inputs pour modifier le mot de passe reste vierge
-						elseif(isset($_POST['oldPass']) && !empty($_POST['oldPass']))
-						{
-							$pass = htmlspecialchars($_POST['oldPass']);
-						}
 
-						if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
-		    			{
-		    				if (filter_var($email, FILTER_VALIDATE_EMAIL))
-				   			{
-								processEditUserSettings($id, $pseudo, $email, $pass);
-								alertSuccess('Vos informations ont bien été mises à jour !');
-				   			}
-				   			else
-				   			{
-				   				alertFailure('Cette adresse email n\'est pas valide', 'userSettings');
-				   			}
-		    			}
-		    			else
-		    			{
-		    				alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'userSettings');
-		    			}
+							if (strlen($pseudo) >= 2 && strlen($pseudo) <= 25)  
+			    			{
+			    				if (filter_var($email, FILTER_VALIDATE_EMAIL))
+					   			{
+									processEditUserSettings($id, $pseudo, $email, $pass);
+									alertSuccess('Vos informations ont bien été mises à jour !');
+					   			}
+					   			else
+					   			{
+					   				alertFailure('Cette adresse email n\'est pas valide', 'userSettings');
+					   			}
+			    			}
+			    			else
+			    			{
+			    				alertFailure('Le nom d\'utilisateur doit faire entre 2 et 25 caractères', 'userSettings');
+			    			}
+						}
+						else
+						{
+							alertFailure('Les champs "Nom d\'utilisateur" et "Email" doivent être correctement remplient', 'userSettings');
+						}
+					}
+					elseif (isset($_POST['deleteUser']) && $_POST['deleteUser'] == 'deleteUser') 
+					{
+						deleteUser($_POST['idUser']);
+						logout();
 					}
 					else
 					{
-						alertFailure('Les champs "Nom d\'utilisateur" et "Email" doivent être correctement remplient', 'userSettings');
+						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'userSettings');
 					}
-				}
-				elseif (isset($_POST['deleteUser']) && $_POST['deleteUser'] == 'deleteUser') 
-				{
-					deleteUser($_POST['idUser']);
-					logout();
 				}
 				else
 				{
-					alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'userSettings');
+					alertFailure('Les informations qui sont transmises ne sont pas correctes', 'userSettings');
 				}
 			}
 			else
 			{
 				throw new Exception('Vous ne pouvez pas modifier cet utilisateur');
 			}
-			break;
-
-		case 'deleteAccount':
-			deleteAccount();
 			break;
 
 
@@ -407,24 +425,44 @@ try
 			break;
 
 		case 'deleteComment':
-			if (isset($_SESSION['access']) && $_SESSION['access'] == 1 || 
-				isset($_SESSION['userName']) && $_SESSION['userName'] == $_POST['commentPseudo']) 
+
+			if (isset($_SESSION['userName'])) 
 			{
-				if (isset($_POST['commentId']) && !empty($_POST['commentId']))
+				$comment = getComment($_POST['commentId']);
+			
+				if (isset($_SESSION['access']) && $_SESSION['access'] == 1 || $_SESSION['userName'] === $comment['pseudo']) 
 				{
-					if (isset($_POST['delete']) && $_POST['delete'] == 'delete') 
+					if (isset($_POST['commentId']) && !empty($_POST['commentId']))
 					{
-						alertSuccess('Le commentaire a bien été supprimé');
-						deleteComment($_POST['commentId']);
+						if (isset($_POST['delete']) && $_POST['delete'] == 'delete') 
+						{
+							alertSuccess('Le commentaire a bien été supprimé');
+							deleteComment($_POST['commentId']);
+						}
+						else
+						{
+							alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'adminComments');
+						}
 					}
 					else
 					{
-						alertFailure('Une action doit être sélectionnée pour pouvoir être effectuée', 'adminComments');
+						alertFailure('Vous devez sélectionner un commentaire pour effectuer cette action', 'adminComments');
 					}
 				}
 				else
 				{
-					alertFailure('Vous devez sélectionner un commentaire pour effectuer cette action', 'adminComments');
+					if ($_SESSION['access'] == 1) 
+					{
+						alertFailure('Vous devez ne pouvez pas supprimer ce commentaire', 'adminComments');
+					}
+					elseif ($_SESSION['access'] == 2)
+					{
+						alertFailure('Vous devez ne pouvez pas supprimer ce commentaire', 'post&id=' . $_GET['id'] . '#comments');
+					}
+					else
+					{
+						alertFailure('Vous ne pouvez pas supprimer ce commentaire', 'home');
+					}
 				}
 			}
 			else
@@ -539,7 +577,7 @@ try
 
 				    	if ($resultPseudo->pseudo() != $pseudo && $resultPseudo->email() != $email) 
 				    	{
-				    		if (strlen($pass) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
+				    		if (strlen($pass) >= 8 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $pass)) 
 				    		{
 				    			if ($pass == $confirmPass) 
 				    			{
@@ -554,7 +592,7 @@ try
 				    		}
 				    		else
 				    		{
-				    			alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'newAdminUser');
+				    			alertFailure('Le mot de passe doit contenir au moins 8 caractères avec des chiffres et des lettres', 'newAdminUser');
 				    		}
 				    	}
 				    	else 
@@ -605,7 +643,7 @@ try
 							$passInitial = htmlspecialchars($_POST['pass']);
 							$confirmPass = htmlspecialchars($_POST['confirmPass']);
 
-							if (strlen($passInitial) >= 12 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
+							if (strlen($passInitial) >= 8 && preg_match('/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/', $passInitial)) 
 				    		{
 								if ($passInitial == $confirmPass)
 								{
@@ -619,7 +657,7 @@ try
 							}
 							else
 							{
-								alertFailure('Le mot de passe doit contenir au moins 12 caractères avec des chiffres et des lettres', 'editUser&userPseudo=' . $_GET['userPseudo']);
+								alertFailure('Le mot de passe doit contenir au moins 8 caractères avec des chiffres et des lettres', 'editUser&userPseudo=' . $_GET['userPseudo']);
 								exit();
 							}
 						}

@@ -94,7 +94,7 @@
 
 						if(count($results) == 0)
 						{
-							echo "<p>Il n'y a pas encore de commentaires</p>";
+							echo "<p class='no_comment'>Il n'y a pas encore de commentaires</p>";
 						}
 
 						foreach ($results as $key => $result) {
